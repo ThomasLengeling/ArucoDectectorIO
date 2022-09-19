@@ -1,0 +1,10 @@
+ofxOpenCv
+ofxCv
+ofxDatGui
+ofxPoco
+ofxSSLManager
+ofxIO
+ofxMediaType
+ofxNetworkUtils
+ofxHTTP
+ofxNetwork
