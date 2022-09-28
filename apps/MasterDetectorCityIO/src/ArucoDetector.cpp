@@ -163,7 +163,7 @@ void ArucoDetector::detectMarkers(cv::Mat &inputVideo, bool refiment) {
 
   // ofxCv::imitate(input, inputVideo);
 
-  aruco::detectMarkers(input, dictionary, corners, arucoIds, detectorParams);
+  //aruco::detectMarkers(input, dictionary, corners, arucoIds, detectorParams);
   // if (refiment) {
   //aruco::refineDetectedMarkers(input, board, corners, arucoIds, rejected);
   //}

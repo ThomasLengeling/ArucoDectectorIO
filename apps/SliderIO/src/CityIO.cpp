@@ -1,7 +1,7 @@
 #include "CityIO.h"
 
 CityIO::CityIO(std::string table) {
-	this->mTable = table;
+    this->mTable = table;
     mGridSize = glm::vec2(0, 0);
 
     //fill default types
@@ -10,13 +10,13 @@ CityIO::CityIO(std::string table) {
     mTypes.insert(std::make_pair("Commercial", 1));
     mTypes.insert(std::make_pair("Education", 2));
     mTypes.insert(std::make_pair("Government Operations", 3));
-    mTypes.insert(std::make_pair("Health",4));
-    mTypes.insert(std::make_pair("Industrial",5));
-    mTypes.insert(std::make_pair("Office",6));
-    mTypes.insert(std::make_pair("Office/R&D",7));
-    mTypes.insert(std::make_pair("Open Space",8));
-    mTypes.insert(std::make_pair("Residential",9));
-    mTypes.insert(std::make_pair("Utility",10));
+    mTypes.insert(std::make_pair("Health", 4));
+    mTypes.insert(std::make_pair("Industrial", 5));
+    mTypes.insert(std::make_pair("Office", 6));
+    mTypes.insert(std::make_pair("Office/R&D", 7));
+    mTypes.insert(std::make_pair("Open Space", 8));
+    mTypes.insert(std::make_pair("Residential", 9));
+    mTypes.insert(std::make_pair("Utility", 10));
     mTypes.insert(std::make_pair("Parking", 11));
     mTypes.insert(std::make_pair("Park", 12));
     mTypes.insert(std::make_pair("Retail", 13));
@@ -87,7 +87,7 @@ ofJson  CityIO::excuteGetRequest(std::string getRequestStr) {
             //ofBuffer buffer(response->stream());
             streamRequest = response->json();
 
-           
+
             ofLogNotice("ofApp::setup") << "Content Begin";
 
             std::cout << streamRequest.dump(4) << std::endl;
@@ -122,7 +122,7 @@ void CityIO::computeGeoGrid() {
     if (streamRequest.contains("ncols") && streamRequest.contains("nrows")) {
         mGridSize.x = streamRequest["ncols"];
         mGridSize.y = streamRequest["nrows"];
-        ofLog(OF_LOG_NOTICE) << "grid: "<< mGridSize.x<<" "<< mGridSize.y<< std::endl;
+        ofLog(OF_LOG_NOTICE) << "grid: " << mGridSize.x << " " << mGridSize.y << std::endl;
     }
 
     if (streamRequest.contains("latitude") && streamRequest.contains("longitude")) {
@@ -146,15 +146,15 @@ void CityIO::computeGeoGrid() {
             types.value()["color"][1].get<int>(),
             types.value()["color"][2].get<int>());
 
-        
 
-       // int aid = (mTypes.find(name))->second;
+
+        // int aid = (mTypes.find(name))->second;
         mDefaultColor.insert(std::make_pair(mTypes.find(name)->second, col.getHex()));
         mDefaultHeight.insert(make_pair(mTypes.find(name)->second, height));
         mDefaultTypes.insert(make_pair(name, mTypes.find(name)->second));
 
         mDefaultTypesRev.insert(make_pair(mTypes.find(name)->second, name));
-       
+
         //map aruco id with the types on the grid
        // int arucoId = mDefaultTypes.find(types.key())->second;
        // mTypes.insert(std::make_pair(types.key(), arucoId));
@@ -165,10 +165,10 @@ void CityIO::computeGeoGrid() {
         //ofLog(OF_LOG_NOTICE) << (int)ofColor::fromHex(colors.first).r << " " << (int)ofColor::fromHex(colors.first).g << " " << colors.second;
     }
     for (auto& colors : mDefaultTypes) {
-       // ofLog(OF_LOG_NOTICE) << colors.first << " " << colors.second;
+        // ofLog(OF_LOG_NOTICE) << colors.first << " " << colors.second;
     }
 
-    
+
 
     //coordinates
 
@@ -187,7 +187,7 @@ void CityIO::computeGeoGrid() {
         coord.y = idxy / (int)mGridSize.y;
 
     }
-    
+
     //get interactive data information
     //request = "GEOGRID/features/";
     //streamRequest = excuteGetRequest(request);
@@ -196,7 +196,7 @@ void CityIO::computeGeoGrid() {
     //main grid id;
     int ids = 0;
     int pid = 0;
-    
+
     //int  id = streamRequest.at(0)["properties"]["interactive"].get<int>();;
     //for (auto& types : streamRequest.items()) {
     //    ids++;        
@@ -216,19 +216,19 @@ void CityIO::computeGeoGrid() {
     int minY = 999;
     int maxY = 0;
 
-    
+
 
     request = "GEOGRIDDATA/";
     streamRequest = excuteGetRequest(request);
     geogriddata = streamRequest;
     ofLog(OF_LOG_NOTICE) << "Interactive size: " << streamRequest.size();
-    for (auto & types : streamRequest.items()) {
+    for (auto& types : streamRequest.items()) {
         string name = "";
         int idxy = types.value()["id"].get<int>();
 
         coord.x = int(idxy % (int)mGridSize.x);
         coord.y = int(idxy / (int)mGridSize.y);
-        
+
         bool interactive = false;
         if (types.value()["interactive"].is_boolean()) {
             interactive = types.value()["interactive"].get<bool>();
@@ -266,11 +266,11 @@ void CityIO::computeGeoGrid() {
             ofLog(OF_LOG_NOTICE) << "id: " << idgrid;
             ofLog(OF_LOG_NOTICE) << "interactive: " << interactive;
             ofLog(OF_LOG_NOTICE) << "name: " << name;
-            
+
             //got ids;
 
             intGridX++;
-            if ( idgrid - idP > 1) { //jump of row
+            if (idgrid - idP > 1) { //jump of row
                 intGridY++;
                 intGridX = 0;
             }
@@ -284,14 +284,14 @@ void CityIO::computeGeoGrid() {
         //int arucoId = mDefaultTypes.find(types.key())->second;
         //mTypes.insert(std::make_pair(types.key(), arucoId));
     }
-    ofLog(OF_LOG_NOTICE) << "bdox: " << minX << " " << maxX << " - "<< minY << " " << maxY << std::endl;
+    ofLog(OF_LOG_NOTICE) << "bdox: " << minX << " " << maxX << " - " << minY << " " << maxY << std::endl;
     ofLog(OF_LOG_NOTICE) << "bdox id: " << minY * mGridSize.x + minX << " " << maxY * mGridSize.x + maxX;
     ofLog(OF_LOG_NOTICE) << maxX - minX + 1 << " " << maxX - minX + 1 << " " << (maxX - minX + 1) * (maxX - minX + 1) << std::endl;
 
     if (intGridY != 0) {
         intGridX = (intGridIndex / intGridY);
     }
-    ofLog(OF_LOG_NOTICE) << "grid: " << intGridIndex<<" "<< intGridX << " " << intGridY << std::endl;
+    ofLog(OF_LOG_NOTICE) << "grid: " << intGridIndex << " " << intGridX << " " << intGridY << std::endl;
     mInteractiveGrid = glm::vec2(intGridX, intGridY);
 
     for (auto& v : mInteractiveIds) {
@@ -320,12 +320,11 @@ void CityIO::executePostGeoGrid(std::map<int, int>  arucotags) {
         if (arucoId == -1) {
             arucoId = 0;
         }
-       // ofLog(OF_LOG_NOTICE) << id << " " << arucoId;
+        // ofLog(OF_LOG_NOTICE) << id << " " << arucoId;
         ofJson::value_type piece;
         piece["height"] = mDefaultHeight[arucoId]; //get aruco value;
         piece["name"] = mDefaultTypesRev[arucoId];
 
-        //check if geogriddata is not empty
         //color
         ofColor col = ofColor::fromHex(mDefaultColor[arucoId]);
         piece["color"] = ofJson::array({ (int)col.r, (int)col.g, (int)col.b, (int)col.a });
@@ -349,7 +348,7 @@ void CityIO::executePostGeoGrid(std::map<int, int>  arucotags) {
     // Set the json request data.
     request.setJSON(geogriddatNew);
 
-    try{
+    try {
         // Execute the request.
         auto response = client.execute(request);
 
@@ -368,7 +367,7 @@ void CityIO::executePostGeoGrid(std::map<int, int>  arucotags) {
             std::cout << std::endl;
 
             ofLogNotice("ofApp::setup") << "Content Begin";
-            ofLog(OF_LOG_NOTICE)<< responseJson.dump(4) << std::endl;
+            ofLog(OF_LOG_NOTICE) << responseJson.dump(4) << std::endl;
             ofLogNotice("ofApp::setup") << "Content End";
         }
         else

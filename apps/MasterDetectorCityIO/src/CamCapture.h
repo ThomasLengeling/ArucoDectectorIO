@@ -21,6 +21,8 @@ Living Line
 // addons
 #include "ofxCv.h"
 #include "ofxOpenCv.h"
+#include "ofxNDI.h" // NDI classes
+#include "ofxSpout.h"
 
 #include "GuiExtension.h"
 
@@ -72,6 +74,7 @@ public:
 
     void toogleCrop(){mActivateCrop =! mActivateCrop;}
     void toogleCam(){mActivateCam =! mActivateCam;}
+    void enableCam(bool cam = true) { mActivateCam = cam; }
 
     void cropImg(cv::Mat & inputVideo);
 
@@ -104,6 +107,9 @@ public:
 
     //get cornes for transformation
     void updateCorners();
+
+    //NDI
+    void enableRemote(bool remote = true) { mEnableRemote = remote; }
 
 
 private:
@@ -155,4 +161,18 @@ private:
     float mGamma;
     float mAlpha;
     float  mBeta;
+
+    //NDI and Spout remote
+    ofxNDIreceiver mNdiReceiver; // NDI receiver
+    //ofImage        mNdiImage;
+    
+    bool mEnableRemote;
+    ofTexture mSpoutTex;
+    ofPixels  mSpoutPixels;
+    ofImage   mSpoutImg;
+    //ofPixels       mNdiPixels;
+
+    ofFbo temp;
+    ofxSpout::Receiver mSpoutReceiver;
+
 };

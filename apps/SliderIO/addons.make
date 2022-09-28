@@ -1,0 +1,9 @@
+ofxDatGui
+ofxPoco
+ofxSSLManager
+ofxIO
+ofxMediaType
+ofxNetworkUtils
+ofxHTTP
+ofxNetwork
+ofxOsc

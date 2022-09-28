@@ -16,6 +16,7 @@ CamCapture::CamCapture(glm::vec2 dims) {
   mGamma = 0.65;
   mActivateCrop = false;
   mActivateCam = true;
+  mEnableRemote = false;
   mFps = 30;
 
   mCornerUp = glm::vec2(0, 0);
@@ -29,6 +30,22 @@ CamCapture::CamCapture(glm::vec2 dims) {
   mFboResolution.begin();
   ofClear(0, 0, 0, 255);
   mFboResolution.end();
+
+  //setup NDI
+
+  //mNdiReceiver.SetSenderName("ndicam");
+  mSpoutReceiver.init("remotecam");
+    // ofImage
+  mSpoutTex.allocate(dims.x, dims.y, GL_RGB);
+
+  // ofPixels
+  mSpoutPixels.allocate(dims.x, dims.y, GL_RGB);
+  temp.allocate(dims.x, dims.y, GL_RGB);
+
+  temp.begin();
+  ofClear(0);
+  temp.end();
+
 }
 
 //-----------------------------------------------------------------------------
@@ -88,7 +105,18 @@ bool CamCapture::updateImage() {
       // mFboResolution.end();
       // ofLog(OF_LOG_NOTICE) << " " << newFrame << " ";
     }
-  } else {
+  } else if(mEnableRemote) {
+      mSpoutReceiver.receive(mSpoutTex);
+      
+      temp.begin();
+      mSpoutTex.draw(0, 0);
+      temp.end();
+
+      ofTexture tex = temp.getTexture();
+      tex.readToPixels(mSpoutPixels);
+
+     //mNdiReceiver.ReceiveImage(mNdiImage);
+     //mNdiReceiver.ReceiveImage(mNdiPixels);
     // mVideoInput.update();
     // newFrame = mVideoInput.isFrameNew();
   }
@@ -97,8 +125,18 @@ bool CamCapture::updateImage() {
 
 //-----------------------------------------------------------------------------
 ofPixels & CamCapture::getImgPixels() {
-  // return (mActivateCam) ? mCam.getPixels() : mVideoInput.getPixels();
-  return mCam.getPixels();
+    if (mActivateCam) {
+        return mCam.getPixels();
+    }
+    else if(mEnableRemote) {
+       // auto pixels = mNdiImage.getPixels();
+       // mNdiImage.update();
+        
+     
+        
+        return mSpoutPixels;
+    }
+  //return mCam.getPixels();
 }
 
 //-----------------------------------------------------------------------------
@@ -115,8 +153,9 @@ void CamCapture::setCropDown(glm::vec2 down) {
 void CamCapture::drawImage(int x, int y, int w, int h) {
   if (mActivateCam) {
     mCam.draw(x, y, w, h);
-  } else {
-    mVideoInput.draw(x, y, w, h);
+  }
+  else if (mEnableRemote) {
+    mSpoutTex.draw(x, y, w, h);
   }
 }
 
@@ -124,8 +163,8 @@ void CamCapture::drawImage(int x, int y, int w, int h) {
 void CamCapture::drawImage(int x, int y) {
   if (mActivateCam) {
     mCam.draw(x, y, mDim.x, mDim.y);
-  } else {
-    mVideoInput.draw(x, y, mDim.x, mDim.y);
+  } else if (mEnableRemote) {
+      mSpoutTex.draw(x, y, mDim.x, mDim.y);
   }
 }
 

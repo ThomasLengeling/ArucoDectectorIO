@@ -31,12 +31,16 @@ void ofApp::setupValues() {
         file >> jsParams;
         mCamFps = jsParams["window"]["camfps"].get<int>();
         mNumCams = jsParams["window"]["numCam"].get<int>();
+
+        mCamWidth = jsParams["window"]["cam_width"].get<int>();
+        mCamHeight = jsParams["window"]["cam_height"].get<int>();
     }
     else {
         ofLog(OF_LOG_NOTICE) << "Cannot Find File: " << configFile;
         mNumCams = 1;
         mCamFps = 5;
     }
+
 
     mConfigureMode = RELEASE;
 
@@ -268,7 +272,7 @@ void ofApp::setupCams() {
     ofLog(OF_LOG_NOTICE) << "setting inputs: " << mNumCams;
 
     for (int i = 0; i < mNumCams; i++) {
-        CamCaptureRef gridImage = CamCapture::create(glm::vec2(CAM_WIDTH, CAM_HEIGHT));
+        CamCaptureRef gridImage = CamCapture::create(glm::vec2(mCamWidth, mCamHeight));
         gridImage->setId(i);
         mCamGrabber.push_back(gridImage);
     }
@@ -306,6 +310,18 @@ void ofApp::setupCams() {
                     mCamGrabber.at(j)->setAlpha(alpha);
                     mCamGrabber.at(j)->setBeta(beta);
 
+                    //enable ndi
+                    bool remote = false;
+                    if (cam[inputImg]["remote"].is_boolean()) {
+                        remote = cam[inputImg]["remote"].get<bool>();
+                        mCamGrabber.at(j)->enableRemote(remote);
+                        remote == true ? mCamGrabber.at(j)->enableCam(false) : mCamGrabber.at(j)->enableCam(true);
+                        ofLog(OF_LOG_NOTICE) << "Enable remote " << remote;
+                    }
+                    else {
+                        ofLog(OF_LOG_NOTICE) << "No json object remote";
+                    }
+
                    // mGammaValue->setValue(gamma);
                     //mAlphaValue->setValue(alpha);
                     //mBetaValue->setValue(beta);
@@ -326,7 +342,7 @@ void ofApp::setupCams() {
     }
 
     // fill the fbos with the appropiate dimentions
-    mFboSingle.allocate(CAM_WIDTH, CAM_HEIGHT, GL_RGBA);
+    mFboSingle.allocate(mCamWidth, mCamHeight, GL_RGBA);
 
     // clean start with Fbos
     mFboSingle.begin();
@@ -355,7 +371,7 @@ void ofApp::setupGridDetector() {
 
         // allocate fbo for drawing
         ofFbo fboTemp;
-        fboTemp.allocate(CAM_WIDTH, CAM_HEIGHT, GL_RGB);
+        fboTemp.allocate(mCamWidth, mCamHeight, GL_RGB);
         fboTemp.begin();
         ofClear(0, 0, 0);
         fboTemp.end();

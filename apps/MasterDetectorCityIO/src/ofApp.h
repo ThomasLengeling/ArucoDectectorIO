@@ -17,12 +17,9 @@
 #include "GridDetector.h"
 #include "CityIO.h"
 
+
 #include <map>
 #include <utility>
-
-
-#define CAM_WIDTH  1920  //1920
-#define CAM_HEIGHT 1080 //1080
 
 enum debugConfiguration {
     INPUT_IMG = 0,
@@ -100,6 +97,8 @@ public:
     std::vector < CamCaptureRef> mCamGrabber;
     int mCurrentCamId;
     ofImage mImageDetector;
+    int mCamWidth;
+    int mCamHeight;
     
 
     // aruco detector

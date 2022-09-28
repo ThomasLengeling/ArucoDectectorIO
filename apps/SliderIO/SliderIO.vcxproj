@@ -1,0 +1,1328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Condition="'$(WindowsTargetPlatformVersion)'==''">
+    <LatestTargetPlatformVersion>$([Microsoft.Build.Utilities.ToolLocationHelper]::GetLatestSDKTargetPlatformVersion('Windows', '10.0'))</LatestTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0</WindowsTargetPlatformVersion>
+    <TargetPlatformVersion>$(WindowsTargetPlatformVersion)</TargetPlatformVersion>
+  </PropertyGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7FD42DF7-442E-479A-BA76-D0022F99702A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>SliderIO</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="../../../openFrameworks/libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="../../../openFrameworks/libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="../../../openFrameworks/libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="../../../openFrameworks/libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_debug</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_debug</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\openFrameworks\addons\ofxDatGui\src;..\..\..\openFrameworks\addons\ofxDatGui\src\components;..\..\..\openFrameworks\addons\ofxDatGui\src\core;..\..\..\openFrameworks\addons\ofxDatGui\src\libs;..\..\..\openFrameworks\addons\ofxDatGui\src\libs\ofxSmartFont;..\..\..\openFrameworks\addons\ofxDatGui\src\themes;..\..\..\openFrameworks\addons\ofxPoco\libs\poco\include;..\..\..\openFrameworks\addons\ofxPoco\src;..\..\..\openFrameworks\addons\ofxSSLManager\src;..\..\..\openFrameworks\addons\ofxIO\libs;..\..\..\openFrameworks\addons\ofxIO\libs\alphanum;..\..\..\openFrameworks\addons\ofxIO\libs\alphanum\include;..\..\..\openFrameworks\addons\ofxIO\libs\brotli;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\common;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\tools;..\..\..\openFrameworks\addons\ofxIO\libs\lz4;..\..\..\openFrameworks\addons\ofxIO\libs\lz4\src;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src;..\..\..\openFrameworks\addons\ofxIO\libs\snappy;..\..\..\openFrameworks\addons\ofxIO\libs\snappy\src;..\..\..\openFrameworks\addons\ofxIO\src;..\..\..\openFrameworks\addons\ofxMediaType\libs;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include\ofx;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\src;..\..\..\openFrameworks\addons\ofxMediaType\src;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\src;..\..\..\openFrameworks\addons\ofxNetworkUtils\src;..\..\..\openFrameworks\addons\ofxHTTP\libs;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src;..\..\..\openFrameworks\addons\ofxHTTP\src;..\..\..\openFrameworks\addons\ofxNetwork\src;..\..\..\openFrameworks\addons\ofxOsc\libs;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\openFrameworks\addons\ofxOsc\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies);PocoCryptomdd.lib;PocoDatamdd.lib;PocoDataSQLitemdd.lib;PocoFoundationmdd.lib;PocoJSONmdd.lib;PocoNetmdd.lib;PocoNetSSLmdd.lib;PocoPDFmdd.lib;PocoUtilmdd.lib;PocoXMLmdd.lib;PocoZipmdd.lib;iphlpapi.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\lib\vs\Win32\Debug;..\..\..\openFrameworks\addons\ofxPoco</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\openFrameworks\addons\ofxDatGui\src;..\..\..\openFrameworks\addons\ofxDatGui\src\components;..\..\..\openFrameworks\addons\ofxDatGui\src\core;..\..\..\openFrameworks\addons\ofxDatGui\src\libs;..\..\..\openFrameworks\addons\ofxDatGui\src\libs\ofxSmartFont;..\..\..\openFrameworks\addons\ofxDatGui\src\themes;..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include;..\..\..\openFrameworks\addons\ofxPoco\src;..\..\..\openFrameworks\addons\ofxSSLManager\src;..\..\..\openFrameworks\addons\ofxIO\libs;..\..\..\openFrameworks\addons\ofxIO\libs\alphanum;..\..\..\openFrameworks\addons\ofxIO\libs\alphanum\include;..\..\..\openFrameworks\addons\ofxIO\libs\brotli;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\common;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\tools;..\..\..\openFrameworks\addons\ofxIO\libs\lz4;..\..\..\openFrameworks\addons\ofxIO\libs\lz4\src;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src;..\..\..\openFrameworks\addons\ofxIO\libs\snappy;..\..\..\openFrameworks\addons\ofxIO\libs\snappy\src;..\..\..\openFrameworks\addons\ofxIO\src;..\..\..\openFrameworks\addons\ofxMediaType\libs;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include\ofx;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\src;..\..\..\openFrameworks\addons\ofxMediaType\src;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\src;..\..\..\openFrameworks\addons\ofxNetworkUtils\src;..\..\..\openFrameworks\addons\ofxHTTP\libs;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src;..\..\..\openFrameworks\addons\ofxHTTP\src;..\..\..\openFrameworks\addons\ofxNetwork\src;..\..\..\openFrameworks\addons\ofxOsc\libs;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\openFrameworks\addons\ofxOsc\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies);PocoCryptomdd.lib;PocoDatamdd.lib;PocoDataSQLitemdd.lib;PocoFoundationmdd.lib;PocoJSONmdd.lib;PocoNetmdd.lib;PocoNetSSLmdd.lib;PocoPDFmdd.lib;PocoUtilmdd.lib;PocoXMLmdd.lib;PocoZipmdd.lib;iphlpapi.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\lib\vs\x64\Debug;..\..\..\openFrameworks\addons\ofxPoco</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\openFrameworks\addons\ofxDatGui\src;..\..\..\openFrameworks\addons\ofxDatGui\src\components;..\..\..\openFrameworks\addons\ofxDatGui\src\core;..\..\..\openFrameworks\addons\ofxDatGui\src\libs;..\..\..\openFrameworks\addons\ofxDatGui\src\libs\ofxSmartFont;..\..\..\openFrameworks\addons\ofxDatGui\src\themes;..\..\..\openFrameworks\addons\ofxPoco\libs\poco\include;..\..\..\openFrameworks\addons\ofxPoco\src;..\..\..\openFrameworks\addons\ofxSSLManager\src;..\..\..\openFrameworks\addons\ofxIO\libs;..\..\..\openFrameworks\addons\ofxIO\libs\alphanum;..\..\..\openFrameworks\addons\ofxIO\libs\alphanum\include;..\..\..\openFrameworks\addons\ofxIO\libs\brotli;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\common;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\tools;..\..\..\openFrameworks\addons\ofxIO\libs\lz4;..\..\..\openFrameworks\addons\ofxIO\libs\lz4\src;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src;..\..\..\openFrameworks\addons\ofxIO\libs\snappy;..\..\..\openFrameworks\addons\ofxIO\libs\snappy\src;..\..\..\openFrameworks\addons\ofxIO\src;..\..\..\openFrameworks\addons\ofxMediaType\libs;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include\ofx;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\src;..\..\..\openFrameworks\addons\ofxMediaType\src;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\src;..\..\..\openFrameworks\addons\ofxNetworkUtils\src;..\..\..\openFrameworks\addons\ofxHTTP\libs;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src;..\..\..\openFrameworks\addons\ofxHTTP\src;..\..\..\openFrameworks\addons\ofxNetwork\src;..\..\..\openFrameworks\addons\ofxOsc\libs;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\openFrameworks\addons\ofxOsc\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies);PocoCryptomd.lib;PocoDatamd.lib;PocoDataSQLitemd.lib;PocoFoundationmd.lib;PocoJSONmd.lib;PocoNetmd.lib;PocoNetSSLmd.lib;PocoPDFmd.lib;PocoUtilmd.lib;PocoXMLmd.lib;PocoZipmd.lib;iphlpapi.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\lib\vs\Win32\Release;..\..\..\openFrameworks\addons\ofxPoco</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\openFrameworks\addons\ofxDatGui\src;..\..\..\openFrameworks\addons\ofxDatGui\src\components;..\..\..\openFrameworks\addons\ofxDatGui\src\core;..\..\..\openFrameworks\addons\ofxDatGui\src\libs;..\..\..\openFrameworks\addons\ofxDatGui\src\libs\ofxSmartFont;..\..\..\openFrameworks\addons\ofxDatGui\src\themes;..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include;..\..\..\openFrameworks\addons\ofxPoco\src;..\..\..\openFrameworks\addons\ofxSSLManager\src;..\..\..\openFrameworks\addons\ofxIO\libs;..\..\..\openFrameworks\addons\ofxIO\libs\alphanum;..\..\..\openFrameworks\addons\ofxIO\libs\alphanum\include;..\..\..\openFrameworks\addons\ofxIO\libs\brotli;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\common;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc;..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\tools;..\..\..\openFrameworks\addons\ofxIO\libs\lz4;..\..\..\openFrameworks\addons\ofxIO\libs\lz4\src;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO;..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src;..\..\..\openFrameworks\addons\ofxIO\libs\snappy;..\..\..\openFrameworks\addons\ofxIO\libs\snappy\src;..\..\..\openFrameworks\addons\ofxIO\src;..\..\..\openFrameworks\addons\ofxMediaType\libs;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include\ofx;..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\src;..\..\..\openFrameworks\addons\ofxMediaType\src;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net;..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\src;..\..\..\openFrameworks\addons\ofxNetworkUtils\src;..\..\..\openFrameworks\addons\ofxHTTP\libs;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP;..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src;..\..\..\openFrameworks\addons\ofxHTTP\src;..\..\..\openFrameworks\addons\ofxNetwork\src;..\..\..\openFrameworks\addons\ofxOsc\libs;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\openFrameworks\addons\ofxOsc\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies);PocoCryptomd.lib;PocoDatamd.lib;PocoDataSQLitemd.lib;PocoFoundationmd.lib;PocoJSONmd.lib;PocoNetmd.lib;PocoNetSSLmd.lib;PocoPDFmd.lib;PocoUtilmd.lib;PocoXMLmd.lib;PocoZipmd.lib;iphlpapi.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\lib\vs\x64\Release;..\..\..\openFrameworks\addons\ofxPoco</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\CityIO.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ofApp.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxDatGui\src\core\ofxDatGuiComponent.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxDatGui\src\libs\ofxSmartFont\ofxSmartFont.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxDatGui\src\ofxDatGui.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxPoco\src\ofxXmlPoco.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxSSLManager\src\ofSSLManager.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\common\dictionary.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec\bit_reader.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec\decode.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec\huffman.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec\state.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\backward_references.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\bit_cost.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\block_splitter.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\brotli_bit_stream.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\cluster.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\compressor.cc" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\compress_fragment.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\compress_fragment_two_pass.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\encode.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\encode_parallel.cc" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\entropy_encode.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\histogram.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\literal_cost.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\memory.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\metablock.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\static_dict.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\streams.cc" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\utf8_util.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\lz4\src\lz4.c" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\BackoffStrategy.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\Base64Encoding.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\ByteBuffer.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\ByteBufferReader.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\ByteBufferStream.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\ByteBufferUtils.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\ByteBufferWriter.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\COBSEncoding.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\Compression.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\DeviceFilter.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\DirectoryFilter.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\DirectoryUtils.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\DirectoryWatcher.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\DirectoryWatcherManager.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\FileExtensionFilter.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\FilteredStreams.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\Hash.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\HexBinaryEncoding.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\HiddenFileFilter.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\ImageUtils.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\JSONUtils.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\LinkFilter.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\PathFilterCollection.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\PollingThread.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\RecursiveDirectoryIterator.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\RecursiveDirectoryIteratorStategies.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\RegexPathFilter.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\SearchPath.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\SLIPEncoding.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\StreamFilters.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\Thread.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\ThreadsafeLoggerChannel.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\src\URIEncoding.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\snappy\src\snappy-c.cc" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\snappy\src\snappy-sinksource.cc" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\snappy\src\snappy-stubs-internal.cc" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxIO\libs\snappy\src\snappy.cc" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\src\MediaTypeMap.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxNetworkUtils\src\ofxNetworkUtils.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\src\IPAddressRange.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\src\NetworkInterfaceListener.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\src\NetworkUtils.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\AuthScope.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\BaseClient.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\BaseRoute.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\BaseServer.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\Client.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\ClientCache.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\ClientEvents.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\ClientProgressStream.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\ClientSessionProvider.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\ClientSessionSettings.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\ClientState.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\Context.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\Cookie.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\CookieStore.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\CookieUtils.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\Credentials.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\CredentialStore.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\DefaultClientHeaders.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\DefaultCookieProcessor.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\DefaultEncodingResponseStreamFilter.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\DefaultProxyProcessor.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\DefaultRedirectProcessor.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\FileSystemRoute.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\FormRequest.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\GetRequest.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\GetRequestTask.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\HeadRequest.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\HTTPClient.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\HTTPHost.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\HTTPUtils.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\IPVideoFrame.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\IPVideoRoute.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\JSONRequest.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\JSONWebToken.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\OAuth10Credentials.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\OAuth10HTTPClient.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\OAuth10RequestFilter.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\OAuth20Credentials.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\OAuth20HTTPClient.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\OAuth20RequestFilter.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\PostRequest.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\PostRoute.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\PostRouteEvents.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\Progress.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\ProxySettings.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\PutRequest.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\Request.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\RequestHandlerAdapter.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\Response.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\Session.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\SessionStore.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\SimpleClient.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\SimpleFileServer.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\SimpleIPVideoServer.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\SimplePostServer.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\SimpleSSEServer.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\SimpleWebSocketServer.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\SSEConnection.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\SSEFrame.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\SSERoute.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\ThreadSettings.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\URIBuilder.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\WebSocketConnection.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\WebSocketExtensions.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\WebSocketFrame.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\src\WebSocketRoute.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxNetwork\src\ofxNetworkUtils.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxNetwork\src\ofxTCPClient.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxNetwork\src\ofxTCPManager.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxNetwork\src\ofxTCPServer.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxNetwork\src\ofxUDPManager.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxOsc\src\ofxOscBundle.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxOsc\src\ofxOscMessage.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxOsc\src\ofxOscParameterSync.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxOsc\src\ofxOscReceiver.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxOsc\src\ofxOscSender.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32\NetworkingUtils.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32\UdpSocket.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.cpp" />
+    <ClCompile Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\CityIO.h" />
+    <ClInclude Include="src\ofApp.h" />
+    <ClInclude Include="src\DatGui.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\components\ofxDatGui2dPad.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\components\ofxDatGuiButton.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\components\ofxDatGuiColorPicker.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\components\ofxDatGuiControls.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\components\ofxDatGuiFRM.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\components\ofxDatGuiGroups.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\components\ofxDatGuiLabel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\components\ofxDatGuiMatrix.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\components\ofxDatGuiScrollView.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\components\ofxDatGuiSlider.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\components\ofxDatGuiTextInput.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\components\ofxDatGuiTextInputField.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\components\ofxDatGuiTimeGraph.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\core\ofxDatGuiComponent.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\core\ofxDatGuiConstants.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\core\ofxDatGuiEvents.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\core\ofxDatGuiIntObject.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\libs\ofxSmartFont\ofxSmartFont.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\ofxDatGui.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\themes\ofxDatGuiTheme.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\themes\ofxDatGuiThemes.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\src\ofxXmlPoco.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\AbstractCache.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\AbstractDelegate.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\AbstractEvent.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\AbstractObserver.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\AbstractPriorityDelegate.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\AbstractStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\AccessExpirationDecorator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\AccessExpireCache.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\AccessExpireLRUCache.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\AccessExpireStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ActiveDispatcher.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ActiveMethod.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ActiveResult.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ActiveRunnable.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ActiveStarter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Activity.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Alignment.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Any.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ArchiveStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Array.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Ascii.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ASCIIEncoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\AsyncChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\AtomicCounter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\AutoPtr.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\AutoReleasePool.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Base32Decoder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Base32Encoder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Base64Decoder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Base64Encoder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\BasicEvent.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\BinaryReader.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\BinaryWriter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Buffer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\BufferAllocator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\BufferedBidirectionalStreamBuf.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\BufferedStreamBuf.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Bugcheck.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ByteOrder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Channel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Checksum.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ClassLibrary.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ClassLoader.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Clock.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Condition.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Config.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Configurable.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ConsoleChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\CountingStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\Cipher.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\CipherFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\CipherImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\CipherKey.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\CipherKeyImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\Crypto.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\CryptoException.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\CryptoStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\CryptoTransform.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\DigestEngine.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\ECDSADigestEngine.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\ECKey.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\ECKeyImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\EVPPKey.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\KeyPair.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\KeyPairImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\OpenSSLInitializer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\PKCS12Container.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\RSACipherImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\RSADigestEngine.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\RSAKey.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\RSAKeyImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Crypto\X509Certificate.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\AbstractBinder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\AbstractBinding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\AbstractExtraction.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\AbstractExtractor.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\AbstractPreparation.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\AbstractPreparator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\AbstractSessionImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\ArchiveStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\AutoTransaction.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Binding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Bulk.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\BulkBinding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\BulkExtraction.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Column.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Connector.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Constants.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Data.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\DataException.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Date.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\DynamicDateTime.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\DynamicLOB.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Extraction.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Limit.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\LOB.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\LOBStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\MetaColumn.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\PooledSessionHolder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\PooledSessionImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Position.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Preparation.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Range.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\RecordSet.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Row.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\RowFilter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\RowFormatter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\RowIterator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Session.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SessionFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SessionImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SessionPool.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SessionPoolContainer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SimpleRowFormatter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SQLChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SQLite\Binder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SQLite\Connector.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SQLite\Extractor.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SQLite\Notifier.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SQLite\SessionImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SQLite\SQLite.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SQLite\SQLiteException.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SQLite\SQLiteStatementImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\SQLite\Utility.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Statement.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\StatementCreator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\StatementImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Time.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\Transaction.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Data\TypeHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DateTime.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DateTimeFormat.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DateTimeFormatter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DateTimeParser.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Debugger.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DefaultStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DeflatingStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Delegate.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DigestEngine.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DigestStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DirectoryIterator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DirectoryIteratorStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DirectoryIterator_UNIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DirectoryIterator_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DirectoryIterator_WIN32U.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DirectoryWatcher.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\AbstractContainerNode.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\AbstractNode.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\Attr.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\AttrMap.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\AutoPtr.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\CDATASection.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\CharacterData.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\ChildNodesList.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\Comment.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\Document.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\DocumentEvent.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\DocumentFragment.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\DocumentType.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\DOMBuilder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\DOMException.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\DOMImplementation.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\DOMObject.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\DOMParser.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\DOMSerializer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\DOMWriter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\DTDMap.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\Element.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\ElementsByTagNameList.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\Entity.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\EntityReference.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\Event.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\EventDispatcher.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\EventException.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\EventListener.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\EventTarget.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\MutationEvent.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\NamedNodeMap.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\Node.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\NodeAppender.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\NodeFilter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\NodeIterator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\NodeList.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\Notation.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\ProcessingInstruction.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\Text.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DOM\TreeWalker.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Dynamic\Pair.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Dynamic\Struct.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Dynamic\Var.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Dynamic\VarHolder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Dynamic\VarIterator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DynamicAny.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DynamicAnyHolder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DynamicFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\DynamicStruct.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Environment.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Environment_UNIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Environment_VX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Environment_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Environment_WIN32U.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Environment_WINCE.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Error.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ErrorHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Event.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\EventArgs.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\EventChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\EventLogChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Event_POSIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Event_VX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Event_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Exception.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ExpirationDecorator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Expire.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ExpireCache.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ExpireLRUCache.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ExpireStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FIFOBuffer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FIFOBufferStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FIFOEvent.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FIFOStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\File.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FileChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FileStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FileStreamFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FileStream_POSIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FileStream_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\File_UNIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\File_VX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\File_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\File_WIN32U.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\File_WINCE.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Format.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Formatter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FormattingChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Foundation.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FPEnvironment.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FPEnvironment_C99.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FPEnvironment_DEC.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FPEnvironment_DUMMY.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FPEnvironment_QNX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FPEnvironment_SUN.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FPEnvironment_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FunctionDelegate.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\FunctionPriorityDelegate.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Glob.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Hash.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\HashFunction.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\HashMap.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\HashSet.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\HashStatistic.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\HashTable.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\HexBinaryDecoder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\HexBinaryEncoder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\HMACEngine.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\InflatingStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Instantiator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\JSON\Array.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\JSON\Handler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\JSON\JSON.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\JSON\JSONException.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\JSON\Object.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\JSON\ParseHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\JSON\Parser.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\JSON\ParserImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\JSON\PrintHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\JSON\Query.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\JSON\Stringifier.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\JSON\Template.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\JSON\TemplateCache.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\JSONString.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\KeyValueArgs.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Latin1Encoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Latin2Encoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Latin9Encoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\LinearHashTable.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\LineEndingConverter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ListMap.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\LocalDateTime.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\LogFile.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\LogFile_STD.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\LogFile_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\LogFile_WIN32U.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Logger.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\LoggingFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\LoggingRegistry.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\LogStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\LRUCache.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\LRUStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Manifest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MD4Engine.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MD5Engine.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MemoryPool.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MemoryStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Message.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MetaObject.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MetaProgramming.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\Array.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\Binary.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\BSONReader.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\BSONWriter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\Connection.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\Cursor.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\Database.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\DeleteRequest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\Document.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\Element.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\GetMoreRequest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\InsertRequest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\JavaScriptCode.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\KillCursorsRequest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\Message.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\MessageHeader.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\MongoDB.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\ObjectId.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\PoolableConnectionFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\QueryRequest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\RegularExpression.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\ReplicaSet.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\RequestMessage.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\ResponseMessage.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\MongoDB\UpdateRequest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Mutex.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Mutex_POSIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Mutex_VX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Mutex_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Mutex_WINCE.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NamedEvent.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NamedEvent_Android.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NamedEvent_UNIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NamedEvent_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NamedEvent_WIN32U.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NamedMutex.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NamedMutex_Android.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NamedMutex_UNIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NamedMutex_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NamedMutex_WIN32U.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NamedTuple.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NestedDiagnosticContext.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\AbstractHTTPRequestHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\AcceptCertificateHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\CertificateHandlerFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\CertificateHandlerFactoryMgr.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\ConsoleCertificateHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\Context.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\DatagramSocket.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\DatagramSocketImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\DialogSocket.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\DNS.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\FilePartSource.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\FTPClientSession.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\FTPStreamFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HostEntry.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTMLForm.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPAuthenticationParams.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPBasicCredentials.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPBasicStreamBuf.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPBufferAllocator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPChunkedStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPClientSession.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPCookie.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPCredentials.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPDigestCredentials.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPFixedLengthStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPHeaderStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPIOStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPMessage.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPRequest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPRequestHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPRequestHandlerFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPResponse.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPSClientSession.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPServer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPServerConnection.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPServerConnectionFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPServerParams.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPServerRequest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPServerRequestImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPServerResponse.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPServerResponseImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPServerSession.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPSession.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPSessionFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPSessionInstantiator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPSSessionInstantiator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPSStreamFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\HTTPStreamFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\ICMPClient.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\ICMPEventArgs.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\ICMPPacket.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\ICMPPacketImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\ICMPSocket.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\ICMPSocketImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\ICMPv4PacketImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\InvalidCertificateHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\IPAddress.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\IPAddressImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\KeyConsoleHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\KeyFileHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\MailMessage.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\MailRecipient.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\MailStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\MediaType.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\MessageHeader.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\MulticastSocket.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\MultipartReader.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\MultipartWriter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\NameValueCollection.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\Net.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\NetException.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\NetSSL.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\NetworkInterface.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\NTPClient.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\NTPEventArgs.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\NTPPacket.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\NullPartHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\OAuth10Credentials.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\OAuth20Credentials.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\ParallelSocketAcceptor.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\ParallelSocketReactor.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\PartHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\PartSource.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\PartStore.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\PollSet.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\POP3ClientSession.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\PrivateKeyFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\PrivateKeyFactoryMgr.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\PrivateKeyPassphraseHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\QuotedPrintableDecoder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\QuotedPrintableEncoder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\RawSocket.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\RawSocketImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\RejectCertificateHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\RemoteSyslogChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\RemoteSyslogListener.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SecureServerSocket.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SecureServerSocketImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SecureSMTPClientSession.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SecureSocketImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SecureStreamSocket.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SecureStreamSocketImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\ServerSocket.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\ServerSocketImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\Session.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SMTPChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SMTPClientSession.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\Socket.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SocketAcceptor.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SocketAddress.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SocketAddressImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SocketConnector.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SocketDefs.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SocketImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SocketNotification.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SocketNotifier.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SocketReactor.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SocketStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SSLException.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\SSLManager.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\StreamSocket.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\StreamSocketImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\StringPartSource.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\TCPServer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\TCPServerConnection.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\TCPServerConnectionFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\TCPServerDispatcher.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\TCPServerParams.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\Utility.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\VerificationErrorArgs.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\WebSocket.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\WebSocketImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Net\X509Certificate.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NObserver.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Notification.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NotificationCenter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NotificationQueue.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NotificationStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Nullable.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NullChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NullStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NumberFormatter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NumberParser.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\NumericString.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ObjectPool.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Observer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Optional.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Path.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Path_UNIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Path_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Path_WIN32U.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Path_WINCE.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\PatternFormatter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\PBKDF2Engine.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Pipe.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\PipeImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\PipeImpl_DUMMY.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\PipeImpl_POSIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\PipeImpl_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\PipeStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Platform.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Platform_POSIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Platform_VX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Platform_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Poco.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\PriorityDelegate.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\PriorityEvent.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\PriorityExpire.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\PriorityNotificationQueue.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\PriorityStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Process.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Process_UNIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Process_VX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Process_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Process_WIN32U.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Process_WINCE.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\PurgeStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Random.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\RandomStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\RecursiveDirectoryIterator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\RecursiveDirectoryIteratorImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\RefCountedObject.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\RegularExpression.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\RotateStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Runnable.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\RunnableAdapter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\RWLock.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\RWLock_Android.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\RWLock_POSIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\RWLock_VX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\RWLock_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\RWLock_WINCE.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\Attributes.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\AttributesImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\ContentHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\DeclHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\DefaultHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\DTDHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\EntityResolver.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\EntityResolverImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\ErrorHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\InputSource.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\LexicalHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\Locator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\LocatorImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\NamespaceSupport.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\SAXException.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\SAXParser.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\WhitespaceFilter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\XMLFilter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\XMLFilterImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SAX\XMLReader.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ScopedLock.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ScopedUnlock.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Semaphore.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Semaphore_POSIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Semaphore_VX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Semaphore_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SevenZip\Archive.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SevenZip\ArchiveEntry.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SevenZip\SevenZip.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SHA1Engine.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SharedLibrary.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SharedLibrary_HPUX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SharedLibrary_UNIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SharedLibrary_VX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SharedLibrary_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SharedLibrary_WIN32U.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SharedMemory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SharedMemory_DUMMY.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SharedMemory_POSIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SharedMemory_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SharedPtr.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SignalHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SimpleFileChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SimpleHashTable.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SingletonHolder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SortedDirectoryIterator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SplitterChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Stopwatch.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\StrategyCollection.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\StreamChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\StreamConverter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\StreamCopier.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\StreamTokenizer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\StreamUtil.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\String.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\StringTokenizer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SynchronizedObject.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\SyslogChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Task.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\TaskManager.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\TaskNotification.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\TeeStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\TemporaryFile.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\TextBufferIterator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\TextConverter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\TextEncoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\TextIterator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Thread.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ThreadLocal.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ThreadPool.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ThreadTarget.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Thread_POSIX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Thread_VX.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Thread_WIN32.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Thread_WINCE.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\TimedNotificationQueue.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Timer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Timespan.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Timestamp.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Timezone.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Token.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Tuple.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\TypeList.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Types.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UnbufferedStreamBuf.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Unicode.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UnicodeConverter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UniqueAccessExpireCache.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UniqueAccessExpireLRUCache.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UniqueAccessExpireStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UniqueExpireCache.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UniqueExpireLRUCache.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UniqueExpireStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UnWindows.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\URI.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\URIStreamFactory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\URIStreamOpener.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UTF16Encoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UTF32Encoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UTF8Encoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UTF8String.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UTFString.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\AbstractConfiguration.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\Application.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\ConfigurationMapper.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\ConfigurationView.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\FilesystemConfiguration.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\HelpFormatter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\IniFileConfiguration.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\IntValidator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\JSONConfiguration.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\LayeredConfiguration.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\LoggingConfigurator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\LoggingSubsystem.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\MapConfiguration.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\Option.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\OptionCallback.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\OptionException.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\OptionProcessor.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\OptionSet.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\PropertyFileConfiguration.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\RegExpValidator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\ServerApplication.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\Subsystem.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\SystemConfiguration.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\Timer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\TimerTask.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\TimerTaskAdapter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\Units.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\Util.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\Validator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\WinRegistryConfiguration.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\WinRegistryKey.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\WinService.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Util\XMLConfiguration.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UUID.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\UUIDGenerator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\ValidArgs.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Version.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Void.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Windows1250Encoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Windows1251Encoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Windows1252Encoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\WindowsConsoleChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\Content.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\expat.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\expat_external.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\Name.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\NamePool.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\NamespaceStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\ParserEngine.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\QName.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\ValueTraits.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\XML.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\XMLException.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\XMLStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\XMLStreamParser.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\XMLStreamParserException.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\XMLString.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\XML\XMLWriter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\zconf.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\Add.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\AutoDetectStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\Compress.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\Decompress.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\Delete.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\Keep.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\ParseCallback.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\PartialStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\Rename.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\Replace.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\SkipCallback.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\Zip.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\ZipArchive.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\ZipArchiveInfo.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\ZipCommon.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\ZipDataInfo.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\ZipException.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\ZipFileInfo.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\ZipLocalFileHeader.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\ZipManipulator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\ZipOperation.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\ZipStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\Zip\ZipUtil.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxPoco\libs\poco\poco\include\Poco\zlib.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxSSLManager\src\ofSSLManager.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\src\ofxIO.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\alphanum\include\alphanum.hpp" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\common\constants.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\common\dictionary.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\common\port.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\common\types.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec\bit_reader.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec\context.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec\decode.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec\huffman.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec\port.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec\prefix.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec\state.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\dec\transform.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\backward_references.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\backward_references_inc.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\bit_cost.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\bit_cost_inc.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\block_encoder_inc.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\block_splitter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\block_splitter_inc.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\brotli_bit_stream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\cluster.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\cluster_inc.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\command.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\compressor.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\compress_fragment.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\compress_fragment_two_pass.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\context.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\dictionary_hash.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\encode.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\encode_parallel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\entropy_encode.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\entropy_encode_static.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\fast_log.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\find_match_length.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\hash.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\hash_forgetful_chain_inc.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\hash_longest_match_inc.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\hash_longest_match_quickly_inc.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\histogram.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\histogram_inc.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\literal_cost.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\memory.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\metablock.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\metablock_inc.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\port.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\prefix.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\quality.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\ringbuffer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\static_dict.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\static_dict_lut.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\streams.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\utf8_util.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\enc\write_bits.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\brotli\src\tools\version.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\lz4\src\lz4.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\AbstractCache.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\DirectoryWatcher.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\AbstractTypes.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\BackoffStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\Base64Encoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\ByteBuffer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\ByteBufferParser.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\ByteBufferReader.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\ByteBufferStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\ByteBufferUtils.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\ByteBufferWriter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\COBSEncoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\Compression.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\DeviceFilter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\DirectoryFilter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\DirectoryUtils.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\DirectoryWatcherManager.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\FileExtensionFilter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\FilteredStreams.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\Hash.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\HexBinaryEncoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\HiddenFileFilter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\ImageUtils.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\JSONUtils.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\LinkFilter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\ObjectPool.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\PathFilterCollection.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\PollingThread.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\RegexPathFilter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\SearchPath.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\SLIPEncoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\StreamFilters.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\Thread.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\ThreadChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\ThreadsafeLoggerChannel.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO\URIEncoding.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\LRUCache.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\LRUStrategy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\ObjectPool.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\RecursiveDirectoryIterator.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\RecursiveDirectoryIteratorImpl.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\RecursiveDirectoryIteratorStategies.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\snappy\src\snappy-c.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\snappy\src\snappy-internal.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\snappy\src\snappy-sinksource.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\snappy\src\snappy-stubs-internal.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\snappy\src\snappy-stubs-public.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxIO\libs\snappy\src\snappy.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxMediaType\src\ofxMediaType.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include\ofx\AbstractMediaTypeProvider.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include\ofx\MediaTypeMap.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxNetworkUtils\src\ofxNetworkUtils.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net\IPAddressRange.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net\NetworkInterfaceListener.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net\NetworkUtils.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\src\ofxHTTP.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\AbstractClientTypes.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\AbstractServerTypes.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\Authentication.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\AuthScope.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\BaseClient.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\BaseRoute.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\BaseServer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\Client.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ClientCache.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ClientEvents.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ClientProgressStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ClientSessionProvider.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ClientSessionSettings.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ClientState.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\Context.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\Cookie.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\CookieStore.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\CookieUtils.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\Credentials.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\CredentialStore.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\DefaultClientHeaders.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\DefaultCookieProcessor.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\DefaultEncodingResponseStreamFilter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\DefaultProxyProcessor.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\DefaultRedirectProcessor.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\FileSystemRoute.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\FormRequest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\GetRequest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\GetRequestTask.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\HeadRequest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\HTTP.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\HTTPClient.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\HTTPHost.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\HTTPUtils.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\IPVideoFrame.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\IPVideoRoute.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\JSONRequest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\JSONResponse.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\JSONWebToken.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\OAuth10Credentials.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\OAuth10HTTPClient.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\OAuth10RequestFilter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\OAuth20Credentials.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\OAuth20HTTPClient.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\OAuth20RequestFilter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\PostRequest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\PostRoute.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\PostRouteEvents.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\Progress.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ProxySettings.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\PutRequest.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\Request.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\RequestHandlerAdapter.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\Response.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ServerEvents.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\Session.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SessionStore.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SimpleClient.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SimpleFileServer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SimpleIPVideoServer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SimplePostServer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SimpleSSEServer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SimpleWebSocketServer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SSEConnection.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SSEEvents.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SSEFrame.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SSERoute.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ThreadErrorHandler.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ThreadSettings.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\URIBuilder.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\WebSocketConnection.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\WebSocketEvents.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\WebSocketExtensions.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\WebSocketFrame.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\WebSocketRoute.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxNetwork\src\ofxNetwork.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxNetwork\src\ofxNetworkUtils.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxNetwork\src\ofxTCPClient.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxNetwork\src\ofxTCPManager.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxNetwork\src\ofxTCPServer.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxNetwork\src\ofxTCPSettings.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxNetwork\src\ofxUDPManager.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxNetwork\src\ofxUDPSettings.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\src\ofxOsc.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\src\ofxOscArg.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\src\ofxOscBundle.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\src\ofxOscMessage.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\src\ofxOscParameterSync.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\src\ofxOscReceiver.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\src\ofxOscSender.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\NetworkingUtils.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\PacketListener.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\TimerListener.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\UdpSocket.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc\MessageMappingOscPacketListener.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc\OscException.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc\OscHostEndianness.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc\OscPacketListener.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.h" />
+    <ClInclude Include="..\..\..\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
+      <Project>{5837595d-aca9-485c-8e76-729040ce4b0b}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="icon.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

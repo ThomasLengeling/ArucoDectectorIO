@@ -127,8 +127,16 @@ void ofApp::update()
             if (pixelsImg.getHeight() > 0) {
                 cv::Mat copyColor;
                 // pixs.rotate90(2);
+                //pixelsImg.u
                 cv::Mat input = ofxCv::toCv(pixelsImg);
+                if (input.empty()) {
+
+                    ofLog(OF_LOG_NOTICE) << "empty input";
+
+                }
+                    
                 cam->cropImg(input);
+               // pixelsImg.up)
                 cv::Mat copMat = cam->getCropMat();
                 if (mConfigureMode == DEBUG_COLOR || mEnableColorPros) {
                     copMat.copyTo(copyColor);
@@ -203,7 +211,7 @@ void ofApp::updateUDP() {
                
                 if (mPrevGridArea != mGridArea) {
 
-                    mCityIo->executePostGeoGrid(mGridAreaS);
+//                    mCityIo->executePostGeoGrid(mGridAreaS);
 
                 }
 
@@ -631,6 +639,7 @@ void ofApp::keyReleased(int key)
         break;
 
     case 'u':
+
         break;
 
     case 'z':
