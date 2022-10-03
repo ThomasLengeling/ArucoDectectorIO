@@ -5,6 +5,7 @@
 #include "ofxNetwork.h"
 #include "DatGui.h"
 #include "CityIO.h"
+#include "ModuleLayer.h"
 
 
 class ofApp : public ofBaseApp{
@@ -52,5 +53,7 @@ class ofApp : public ofBaseApp{
 
         ofxDatButtonRef mButtonReset;
 
+
+        std::vector<ModuleLayerRef> mModulesGui;
 
 };

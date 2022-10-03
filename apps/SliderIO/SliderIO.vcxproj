@@ -348,6 +348,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CityIO.h" />
+    <ClInclude Include="src\ModuleLayer.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\DatGui.h" />
     <ClInclude Include="..\..\..\openFrameworks\addons\ofxDatGui\src\components\ofxDatGui2dPad.h" />
