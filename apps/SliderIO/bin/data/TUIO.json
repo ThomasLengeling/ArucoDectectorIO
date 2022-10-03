@@ -1,0 +1,89 @@
+{
+    "ABM": {
+        "active": true,
+        "display_name": "Animated Trips",
+        "toggle": {
+            "active": true,
+            "default": false,
+            "name": "activate"
+        }
+    },
+    "MAP_STYLE":{
+            "display_name": "Map Style",
+            "active": true,
+            "slider": {
+                "default": 0,
+                "max": 2,
+                "min": 0,
+                "value": 1 
+            }
+        },
+    "ACCESS": {
+        "active": true,
+        "display_name": "Heatmap",
+        "toggle_array": {
+          "name":"HeatMap",
+          "curr_active": 1,
+          "num": 5,
+          "names": [
+                "Innovation Potential",
+                "Office Home",
+                "home office",
+                "proximity",
+                "walkability"
+            ]
+        }
+    },
+    "AGGREGATED_TRIPS": {
+        "active": true,
+        "display_name": "Aggregated Trips",
+        "toggle": {
+            "active": true,
+            "default": false,
+            "name": "activate"
+        }
+    },
+    "GEOJSON": {
+        "active": false,
+        "display_name": "GeoJson",
+        "toggle": {
+            "active": true,
+            "default": false,
+            "name": "activate"
+        }
+    },
+    "GRID": {
+        "active": true,
+        "display_name": "CS Grid",
+        "slider": {
+            "default": 50,
+            "max": 255,
+            "min": 0,
+            "name": "opacity",
+            "value": 100
+        },
+        "toggle": {
+            "active": true,
+            "default": true,
+            "name": "activate"
+        }
+    },
+    "MESH": {
+        "active": false,
+        "display_name": "Mesh <beta>",
+        "toggle": {
+            "active": true,
+            "default": false,
+            "name": "activate"
+        }
+    },
+    "TEXTUAL": {
+        "active": false,
+        "display_name": "Text",
+        "toggle": {
+            "active": true,
+            "default": false,
+            "name": "activate"
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+  "camera": {
+    "adaptiveThreshConstant": 7,
+    "adaptiveThreshWinSizeMax": 37,
+    "adaptiveThreshWinSizeMin": 3,
+    "adaptiveThreshWinSizeStep": 4,
+    "cornerRefinementMaxIterations": 30,
+    "cornerRefinementMinAccuracy": 0.1,
+    "cornerRefinementWinSize": 5,
+    "errorCorrectionRate": 0.6,
+    "markerBorderBits": 1,
+    "maxErroneousBitsInBorderRate": 15,
+    "maxMarkerPerimeterRate": 4,
+    "minCornerDistanceRate": 0.05,
+    "minDistanceToBorder": 5,
+    "minMarkerDistanceRate": 0.05,
+    "minMarkerPerimeterRate": 0.03,
+    "minOtsuStdDev": 5,
+    "perspectiveRemoveIgnoredMarginPerCell": 0.04,
+    "perspectiveRemovePixelPerCell": 10,
+    "polygonalApproxAccuracyRate": 0.05
+  }
+}

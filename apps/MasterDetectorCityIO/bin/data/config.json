@@ -1,0 +1,19 @@
+{
+  "window":{
+    "width" : 1920,
+    "height": 1080,
+    "camfps": 5,
+    "numCam": 1
+  },
+
+  "deploy": {
+    "location": "kendall",
+    "tableName": "volpe_css",
+    "url": "http://cityio.media.mit.edu"
+  },
+
+  "version":{
+    "v": 0.1
+  }
+
+}
