@@ -33,7 +33,9 @@ public:
   
     void computeGeoGrid();
 
-    void executePostGeoGrid(std::map<int, int> tags);
+    void executePostGeoGrid(std::map<int, int> tags, bool overide = false);
+
+    void excuteGetRequestTUI(ofJson request);
 
 private:
 

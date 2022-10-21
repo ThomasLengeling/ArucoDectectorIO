@@ -6,30 +6,38 @@ CityIO::CityIO(std::string table) {
 
     //fill default types
     //aruco code + types
-    mTypes.insert(std::make_pair("Charitable/Religious", 0));
-    mTypes.insert(std::make_pair("Commercial", 1));
-    mTypes.insert(std::make_pair("Education", 2));
-    mTypes.insert(std::make_pair("Government Operations", 3));
-    mTypes.insert(std::make_pair("Health",4));
-    mTypes.insert(std::make_pair("Industrial",5));
-    mTypes.insert(std::make_pair("Office",6));
-    mTypes.insert(std::make_pair("Office/R&D",7));
-    mTypes.insert(std::make_pair("Open Space",8));
-    mTypes.insert(std::make_pair("Residential",9));
-    mTypes.insert(std::make_pair("Utility",10));
-    mTypes.insert(std::make_pair("Parking", 11));
-    mTypes.insert(std::make_pair("Park", 12));
-    mTypes.insert(std::make_pair("Retail", 13));
-    mTypes.insert(std::make_pair("Light Industrial", 14));
-    mTypes.insert(std::make_pair("Institutional", 15));
-    mTypes.insert(std::make_pair("None", 16));
-    mTypes.insert(std::make_pair("Religious", 17));
-    mTypes.insert(std::make_pair("Healthcare", 18));
-    mTypes.insert(std::make_pair("Residential Low Density", 19));
-    mTypes.insert(std::make_pair("Office Tower", 20));
-    mTypes.insert(std::make_pair("Residential Complex", 21));
-    mTypes.insert(std::make_pair("Residential Tower", 22));
-    mTypes.insert(std::make_pair("Residential Single", 23));
+    mTypes.insert(std::make_pair("Commercial R&D - lowrise", 30));
+    mTypes.insert(std::make_pair("Commercial officestui - highrise", 7));
+    mTypes.insert(std::make_pair("Commercial offices and R&D  - medium rise", 21));
+    mTypes.insert(std::make_pair("Cultural - entertainment", 36));
+    mTypes.insert(std::make_pair("MIXED-USE-OFFICE - highrise",10));
+    mTypes.insert(std::make_pair("MIXED-USE-OFFICE - medium rise",28));
+    mTypes.insert(std::make_pair("MIXED-USE-RESIDENTIAL - highrise",35));
+    mTypes.insert(std::make_pair("MIXED-USE-RESIDENTIAL - medium rise",13));
+    mTypes.insert(std::make_pair("Public Parks & Open Space",43));
+    mTypes.insert(std::make_pair("Residentail - high rise",38));
+    mTypes.insert(std::make_pair("Residential - low rise",17));
+    mTypes.insert(std::make_pair("Residential - medium rise", 34));
+    mTypes.insert(std::make_pair("Higher Education", 48));
+    mTypes.insert(std::make_pair("Primary Education", 6));
+
+    mTypes.insert(std::make_pair("MIXED-USE-RESIDENTIAL + OFFICE - medium rise", 4));
+    mTypes.insert(std::make_pair("MIXED-USE-RESIDENTIAL + OFFICE - highrise", 8));
+
+    //mTypes.insert(std::make_pair("Park", 12));
+    //mTypes.insert(std::make_pair("Retail", 13));
+    //mTypes.insert(std::make_pair("Light Industrial", 94));
+    //mTypes.insert(std::make_pair("Institutional", 15));
+    mTypes.insert(std::make_pair("None", -1));
+    //mTypes.insert(std::make_pair("Religious", 17));
+    //mTypes.insert(std::make_pair("Healthcare", 18));
+    //mTypes.insert(std::make_pair("Residential Low Density", 19));
+    //mTypes.insert(std::make_pair("Office Tower", 1));
+    //mTypes.insert(std::make_pair("Residential Complex", 30));
+    //mTypes.insert(std::make_pair("Residential Tower", 10));
+    //mTypes.insert(std::make_pair("Residential Single", 37));
+
+
 }
 
 //---------------------------------------------------------------------------
@@ -139,12 +147,17 @@ void CityIO::computeGeoGrid() {
         ofLog(OF_LOG_NOTICE) << "type: " << types.value() << " " << types.key() << std::endl;
 
         string name = types.value()["name"].get<string>();
-        if (types.value()["height"].is_object()) {
-            height = types.value()["height"].get<int>();
+        //if (types.value()["height"].is_object() || types.value()["height"].is_number_integer()) {
+        //    height = types.value()["height"].get<int>();
+       // }
+        if (types.value()["height"].is_array()) {
+            height = types.value()["height"][1].get<int>();
         }
+
         ofColor col(types.value()["color"][0].get<int>(),
             types.value()["color"][1].get<int>(),
-            types.value()["color"][2].get<int>());
+            types.value()["color"][2].get<int>(),
+            types.value()["color"][3].get<int>());
 
         
 
@@ -175,13 +188,13 @@ void CityIO::computeGeoGrid() {
     int coordinc = 0;
 
     glm::vec2 coord(0, 0);
-    request = "GEOGRIDDATA/";
+    request = "GEOGRID/features/"; // "GEOGRIDDATA/";
     streamRequest = excuteGetRequest(request);
     ofLog(OF_LOG_NOTICE) << "Interactive size: " << streamRequest.size();
     for (auto& types : streamRequest.items()) {
 
         //convert id to x, y coordinates;
-        int idxy = types.value()["id"].get<int>();
+        int idxy = types.value()["properties"]["id"].get<int>();
 
         coord.x = idxy % (int)mGridSize.x;
         coord.y = idxy / (int)mGridSize.y;
@@ -218,35 +231,36 @@ void CityIO::computeGeoGrid() {
 
     
 
-    request = "GEOGRIDDATA/";
+    request = "GEOGRID/features/"; //"GEOGRIDDATA/";
     streamRequest = excuteGetRequest(request);
     geogriddata = streamRequest;
     ofLog(OF_LOG_NOTICE) << "Interactive size: " << streamRequest.size();
     for (auto & types : streamRequest.items()) {
         string name = "";
-        int idxy = types.value()["id"].get<int>();
+        
+        int idxy = types.value()["properties"]["id"].get<int>();
 
         coord.x = int(idxy % (int)mGridSize.x);
         coord.y = int(idxy / (int)mGridSize.y);
         
         bool interactive = false;
-        if (types.value()["interactive"].is_boolean()) {
-            interactive = types.value()["interactive"].get<bool>();
+        if (types.value()["properties"]["interactive"].is_boolean()) {
+            interactive = types.value()["properties"]["interactive"].get<bool>();
         }
-        if (types.value()["interactive"].is_string()) {
-            if (types.value()["interactive"].get<string>() == "Web") {
+        if (types.value()["properties"]["interactive"].is_string()) {
+            if (types.value()["properties"]["interactive"].get<string>() == "Web") {
                 interactive = true;
                 ofLog(OF_LOG_NOTICE) << "web ";
             }
         }
 
-        if (types.value()["name"].is_string()) {
-            name = types.value()["name"].get<string>();
+        if (types.value()["properties"]["name"].is_string()) {
+            name = types.value()["properties"]["name"].get<string>();
         }
 
         if (interactive == true) {
             idP = idgrid;
-            idgrid = types.value()["id"].get<int>();
+            idgrid = types.value()["properties"]["id"].get<int>();
 
 
 
@@ -307,82 +321,194 @@ bool CityIO::updateGridPost(ofJson grid) {
 }
 
 //---------------------------------------------------------------------------
-void CityIO::executePostGeoGrid(std::map<int, int>  arucotags) {
-    ofJson geogriddatNew = ofJson::array();
+void CityIO::executePostGeoGrid(std::map<int, int>  arucotags, bool overide) {
+    
 
     int index = 0;
-    for (auto& title : arucotags) {
-        int id = title.first;
-        int arucoId = title.second;
+    if (!geogriddata.empty()) {  //check if geogriddata is not empty
+        
+        ofJson geogriddatNew = ofJson::array();
 
-        arucoId = 23;
+        
+        ofLog(OF_LOG_NOTICE) << arucotags.size() << std::endl;
+        for (auto& title : arucotags) {
+            int id = title.first;
+            int arucoId = title.second;
+            ofJson::value_type piece;
 
-        if (arucoId == -1) {
-            arucoId = 0;
+            //only interactive pieces
+            bool interactive = false;
+            if (geogriddata.at(id)["properties"]["interactive"].is_boolean()) {
+                interactive = geogriddata.at(id)["properties"]["interactive"].get<bool>();
+            }
+            if (geogriddata.at(id)["properties"]["interactive"].is_string()) {
+                if (geogriddata.at(id)["properties"]["interactive"].get<string>() == "Web") {
+                    interactive = true;
+                    ofLog(OF_LOG_NOTICE) << "web";
+                }
+            }
+
+            if (interactive) {
+                ofColor col = ofColor::fromHex(mDefaultColor[arucoId]);
+                piece["color"] = ofJson::array({ (int)col.r, (int)col.g, (int)col.b, geogriddata.at(id)["properties"]["color"][3] });
+                piece["height"] = int(mDefaultHeight[arucoId]); //get aruco value;
+
+                piece["name"] = std::string(mDefaultTypesRev[arucoId]);
+                if (arucoId == 4 || arucoId == 8) {
+                    piece["name"] = "None";
+                    piece["height"] = 0;
+                    ofLog(OF_LOG_NOTICE) << "interactive none " << arucoId;
+                }
+
+
+            }
+            else {
+                piece["color"] = ofJson::array({ geogriddata.at(id)["properties"]["color"][0], geogriddata.at(id)["properties"]["color"][1],geogriddata.at(id)["properties"]["color"][2], geogriddata.at(id)["properties"]["color"][3] });
+                piece["height"] = geogriddata.at(id)["properties"]["height"].get<int>();
+                piece["name"] = geogriddata.at(id)["properties"]["name"].get<string>();
+
+                
+                if (arucoId == 4 || arucoId == 8) {
+                    piece["name"] = "None";
+                    piece["height"] = 0;
+                    ofLog(OF_LOG_NOTICE) << "none none " << arucoId;
+                }
+               
+            }
+
+            piece["interactive"] = geogriddata.at(id)["properties"]["interactive"];
+            if (geogriddata.at(id)["properties"]["id"].is_number_integer()) {
+                piece["id"] = geogriddata.at(id)["properties"]["id"].get<int>();
+            }
+            if (geogriddata.at(id)["properties"]["lu"].is_string()) {
+                piece["lu"] = geogriddata.at(id)["properties"]["lu"].get<std::string>();
+            }
+
+            if (piece["name"].get<std::string>() == "") {
+                piece["name"] = "None";
+                piece["height"] = 0;
+                ofLog(OF_LOG_NOTICE) << "none "<<arucoId;
+            }
+
+            geogriddatNew.push_back(piece);
+
+            
         }
-       // ofLog(OF_LOG_NOTICE) << id << " " << arucoId;
-        ofJson::value_type piece;
-        piece["height"] = mDefaultHeight[arucoId]; //get aruco value;
-        piece["name"] = mDefaultTypesRev[arucoId];
 
-        //check if geogriddata is not empty
-        //color
-        ofColor col = ofColor::fromHex(mDefaultColor[arucoId]);
-        piece["color"] = ofJson::array({ (int)col.r, (int)col.g, (int)col.b, (int)col.a });
-        piece["interactive"] = geogriddata.at(id)["interactive"];
-        piece["id"] = geogriddata.at(id)["id"];
-        piece["lu"] = geogriddata.at(id)["lu"];
-        geogriddatNew.push_back(piece);
-    }
+        //ofLog(OF_LOG_NOTICE) << geogriddatNew.dump(4) << std::endl;
 
-    //
-    std::string postUrl = mBaseUrl + "/api/table/" + mTable + "/GEOGRIDDATA/";
+        //
+        std::string postUrl = mBaseUrl + "/api/table/" + mTable + "/GEOGRIDDATA/";
 
-    ofLog(OF_LOG_NOTICE) << "HTTP POST: " << postUrl << std::endl;
+        ofLog(OF_LOG_NOTICE) << "HTTP POST: " << postUrl << std::endl;
 
-    // Create a client.
-    ofxHTTP::Client client;
+        // Create a client.
+        ofxHTTP::Client client;
 
-    // Create a request.
-    ofxHTTP::JSONRequest request(postUrl);
+        // Create a request.
+        ofxHTTP::JSONRequest request(postUrl);
 
-    // Set the json request data.
-    request.setJSON(geogriddatNew);
+        // Set the json request data.
+        request.setJSON(geogriddatNew);
 
-    try{
-        // Execute the request.
-        auto response = client.execute(request);
+        try {
+            // Execute the request.
+            auto response = client.execute(request);
 
-        // Check the response.
-        if (response->getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
+            // Check the response.
+            if (response->getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
+            {
+                // A successful response.
+                ofLogNotice("ofApp::setup") << "Response success, expecting " << response->estimatedContentLength() << " bytes.";
+
+                // Buffer the response, or otherwise consume the stream.
+                ofJson responseJson = response->json();
+                Poco::StreamCopier::copyStream(response->stream(), std::cout);
+
+                // Flush the input stream.
+                std::cout << std::endl;
+
+                ofLogNotice("ofApp::setup") << "Sent Data to CityIO Completed";
+                //ofLog(OF_LOG_NOTICE) << geogriddatNew.dump(4) << std::endl;
+                ofLog(OF_LOG_NOTICE) << responseJson.dump(4) << std::endl;
+               // ofLogNotice("ofApp::setup") << "Content End";
+            }
+            else
+            {
+                ofLogError("ofApp::setup") << response->getStatus() << " " << response->getReason();
+            }
+        }
+        catch (const Poco::Exception& exc)
         {
-            // A successful response.
-            ofLogNotice("ofApp::setup") << "Response success, expecting " << response->estimatedContentLength() << " bytes.";
-
-            // Buffer the response, or otherwise consume the stream.
-            ofJson responseJson = response->json();
-
-            Poco::StreamCopier::copyStream(response->stream(), std::cout);
-
-            // Flush the input stream.
-            std::cout << std::endl;
-
-            ofLogNotice("ofApp::setup") << "Content Begin";
-            ofLog(OF_LOG_NOTICE)<< responseJson.dump(4) << std::endl;
-            ofLogNotice("ofApp::setup") << "Content End";
+            ofLogError("ofApp::setup") << exc.displayText();
         }
-        else
+        catch (const std::exception& exc)
         {
-            ofLogError("ofApp::setup") << response->getStatus() << " " << response->getReason();
+            ofLogError("ofApp::setup") << exc.what();
         }
     }
-    catch (const Poco::Exception& exc)
-    {
-        ofLogError("ofApp::setup") << exc.displayText();
+    else {
+        
+        ofLogError("NOTICE") << "geojson empty, read geogriddata first";
     }
-    catch (const std::exception& exc)
-    {
-        ofLogError("ofApp::setup") << exc.what();
+
+}
+
+void CityIO::excuteGetRequestTUI(ofJson requestTUI) {
+
+    if(!requestTUI.empty()){
+        //
+        std::string postUrl = mBaseUrl + "/api/table/" + mTable + "/tui/";
+
+        ofLog(OF_LOG_NOTICE) << "HTTP POST: " << postUrl << std::endl;
+
+        // Create a client.
+        ofxHTTP::Client client;
+
+        // Create a request.
+        ofxHTTP::JSONRequest request(postUrl);
+
+        // Set the json request data.
+        request.setJSON(requestTUI);
+
+        try {
+            // Execute the request.
+            auto response = client.execute(request);
+
+            // Check the response.
+            if (response->getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
+            {
+                // A successful response.
+                ofLogNotice("ofApp::setup") << "Response success, expecting " << response->estimatedContentLength() << " bytes.";
+
+                // Buffer the response, or otherwise consume the stream.
+                ofJson responseJson = response->json();
+                Poco::StreamCopier::copyStream(response->stream(), std::cout);
+
+                // Flush the input stream.
+                std::cout << std::endl;
+
+                ofLogNotice("ofApp::setup") << "Sent TUI to CityIO Completed";
+                ofLog(OF_LOG_NOTICE) << responseJson.dump(4) << std::endl;
+                ofLogNotice("ofApp::setup") << "Content End";
+            }
+            else
+            {
+                ofLogError("ofApp::setup") << response->getStatus() << " " << response->getReason();
+            }
+        }
+        catch (const Poco::Exception& exc)
+        {
+            ofLogError("ofApp::setup") << exc.displayText();
+        }
+        catch (const std::exception& exc)
+        {
+            ofLogError("ofApp::setup") << exc.what();
+        }
+    }
+    else {
+
+        ofLogError("NOTICE") << "TUIO empty or not found";
     }
 
 }

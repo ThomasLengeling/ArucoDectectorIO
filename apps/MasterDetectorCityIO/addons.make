@@ -7,4 +7,6 @@ ofxIO
 ofxMediaType
 ofxNetworkUtils
 ofxHTTP
+ofxNDI
 ofxNetwork
+ofxSpout

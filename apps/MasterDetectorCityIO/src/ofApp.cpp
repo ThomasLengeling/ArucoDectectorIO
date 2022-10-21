@@ -7,7 +7,7 @@ using namespace ofxCv;
 
 void ofApp::setup()
 {
- 
+
     // init video grabber
     //get back a list of devices.
     // Print available devices
@@ -35,7 +35,7 @@ void ofApp::setup()
 
     setupArucoDetector();
     setupGridDetector();
-    setupCamCalibration();
+    //setupCamCalibration();
     setupCams();
     setupUDPConnection();
 
@@ -61,7 +61,7 @@ void ofApp::update()
 
     std::vector<cv::Mat> imageCopys;
     std::vector<std::string> UDPStrings;
-   
+
 
     int j = 0;
     for (auto& mGrabber : mCamGrabber) {
@@ -101,7 +101,7 @@ void ofApp::update()
                 mArucoDetector.at(currentId)->detectMarkers(imageCopy, mRefimentAruco);
 
                 // calculate the number of total markers
-                mMaxMarkers = mArucoDetector.at(currentId)->getNumMarkers();
+                mNumMarkersRaw = mArucoDetector.at(currentId)->getNumMarkers();
 
                 // get the marker image output
                 mImageDetector = mArucoDetector.at(currentId)->getOfImg();
@@ -120,7 +120,7 @@ void ofApp::update()
     }
     else if (mBFullGrid->isActive()) {
         int i = 0;
-        mMaxMarkers = 0;
+        mNumMarkersRaw = 0;
         for (auto& cam : mCamGrabber) {
             cv::Mat imageCopy;
             ofPixels pixelsImg =  cam->getImgPixels();
@@ -130,11 +130,9 @@ void ofApp::update()
                 //pixelsImg.u
                 cv::Mat input = ofxCv::toCv(pixelsImg);
                 if (input.empty()) {
-
                     ofLog(OF_LOG_NOTICE) << "empty input";
-
                 }
-                    
+
                 cam->cropImg(input);
                // pixelsImg.up)
                 cv::Mat copMat = cam->getCropMat();
@@ -152,7 +150,8 @@ void ofApp::update()
                     mArucoDetector.at(i)->detectMarkers(imageCopy, mRefimentAruco);
 
                     // calculate the number of total markers
-                    mMaxMarkers += mArucoDetector.at(i)->getNumMarkers();
+                    mNumMarkersRaw += mArucoDetector.at(i)->getNumMarkers();
+                    
 
                     // get the marker image output
                     mImageDetector = mArucoDetector.at(i)->getOfImg();
@@ -178,6 +177,10 @@ void ofApp::update()
 
     offScreenMarkers();
 
+    updateUDP();
+
+    updateTabletJson();
+
     if (mCalculateGrid) {
         mGridDetector.at(mCurrentCamId)->generateGridPos(mGridLocation.x, mGridLocation.y, mGridStep.x, mGridStep.y);
         ofLog(OF_LOG_NOTICE) << mGridLocation.x << " " << mGridLocation.y << " " << mGridStep.x<< " " << mGridStep.y;
@@ -186,7 +189,7 @@ void ofApp::update()
 
 
 }
-//--------------------------------------------------------------------------- 
+//---------------------------------------------------------------------------
 void ofApp::updateUDP() {
     // calculate probabilyt and clean nois
     if (mBSingleGrid->isActive()) {
@@ -197,26 +200,25 @@ void ofApp::updateUDP() {
             doneClean = 1;
         }
 
-        if (doneClean > 0) {
+        if (doneClean >= 1) {
 
             //send a single grid
             if (mGridDetector.at(mCurrentCamId)->isDoneCleaner()) {
-              
+
                 std::map<int, int> gridInterSingle = mGridDetector.at(mCurrentCamId)->getGridInter();
                // mUDPConnectionTable.Send(udpMsg.c_str(), udpMsg.length());
 
                 mPrevGridAreaS = mGridAreaS;
                 mGridAreaS = gridInterSingle;
 
-               
-                if (mPrevGridArea != mGridArea) {
+                if (mPrevGridAreaS != mGridAreaS) {
 
-//                    mCityIo->executePostGeoGrid(mGridAreaS);
+                    mCityIo->executePostGeoGrid(mGridAreaS, false); //overide interative
+
+                    ofLog(OF_LOG_NOTICE) << "sent data " << std::endl;
 
                 }
-
             }
-
 
             mGridDetector.at(mCurrentCamId)->resetProbabilty();
         }
@@ -226,25 +228,56 @@ void ofApp::updateUDP() {
         //if we have clean succesfully 4 times the.
         int doneClean = 0;
         for (auto& gridDetector : mGridDetector) {
-            
+
             if (gridDetector->isDoneCleaner()) {
                 gridDetector->calculateProbabilityGrid();
-                doneClean++;
+                   doneClean++;
             }
         }
-       
-        //ofLog(OF_LOG_NOTICE) << "D: " << doneClean << std::endl;
-        
+
         // send UDP in the correct format.
-        if (doneClean == 4) {
+        if (doneClean >= mNumCams) {
+            mNumMarkers = 0;
+           
+            mPrevGridArea = mGridArea;
+            mGridArea.clear();
+
+            for (auto& gridInter : mGridDetector) {
+                auto gridInt = gridInter->getGridInter();
+                mGridArea.insert(gridInt.begin(), gridInt.end());
+
+            }
+            //std::map<int, int> gridInter01 = mGridDetector.at(0)->getGridInter();
+            //std::map<int, int> gridInter02 = mGridDetector.at(1)->getGridInter();
+            //std::map<int, int> gridInter03 = mGridDetector.at(2)->getGridInter();
+            //std::map<int, int> gridInter04 = mGridDetector.at(3)->getGridInter();
+
+            //mGridArea/
+
+            //mPrevGridArea = mGridArea;
+            //mGridArea.clear();
+
+           // mGridArea.insert(gridInter01.begin(), gridInter01.end());
+           // mGridArea.insert(gridInter02.begin(), gridInter02.end());
+           // mGridArea.insert(gridInter03.begin(), gridInter03.end());
+           // mGridArea.insert(gridInter04.begin(), gridInter04.end());
+
+
+            if (mPrevGridArea != mGridArea) {
+                /*ofLog(OF_LOG_NOTICE) << std::endl;
+                for (auto& val : mGridArea) {
+                    ofLog(OF_LOG_NOTICE) << val.first << " " << val.second;
+                }
+                */
+
+                mCityIo->executePostGeoGrid(mGridArea, false); //overide interative
+                ofLog(OF_LOG_NOTICE) << "ready to send data to cityIO" << std::endl;
+            }
             /*
             std::string compandStr;
             compandStr += "i ";
 
-            std::map<int, int> empthGrid = mGridDetector.at(0)->getEmptyGrid();
 
-            std::map<int, int> gridInter01 = mGridDetector.at(0)->getGridInter();
-            std::map<int, int> gridInter02 = mGridDetector.at(1)->getGridInter();
             std::map<int, int> gridInter03 = mGridDetector.at(2)->getGridInter();
             std::map<int, int> gridInter04 = mGridDetector.at(3)->getGridInter();
 
@@ -275,7 +308,7 @@ void ofApp::updateUDP() {
             mGridArea.at(3).insert(gridInter04.begin(), gridInter04.end());
 
 
-            //send grid areas if there was a change in the grid 
+            //send grid areas if there was a change in the grid
             for (int i = 0; i < mPrevGridArea.size(); i++) {
                 if (mPrevGridArea.at(i) != mGridArea.at(i)) {
                     std::string mUdpMsg = "i" + to_string(i + 1) + " ";
@@ -291,12 +324,33 @@ void ofApp::updateUDP() {
             */
 
             for (auto& gridDetector : mGridDetector) {
+                mNumMarkers += gridDetector->getNumMarkersAbolute();
                 gridDetector->resetProbabilty();
             }
+
         }
     }
 }
-//--------------------------------------------------------------------------- 
+//----------------------------------------------
+void ofApp::updateTabletJson() {
+    char udpMessage[10000];
+    mUDPConnectionTablet.Receive(udpMessage, 10000);
+
+    string message = udpMessage;
+    if (message != "") {
+        if (udpMessage[0] == '{') {
+            ofJson tuijson = ofJson::parse(message);
+            //std::string tuijson = tuijson.dump();
+            ofLog(OF_LOG_NOTICE) << tuijson.dump(4);
+            mCityIo->excuteGetRequestTUI(tuijson);
+        }
+        else {
+            ofLog(OF_LOG_NOTICE) << "error UDP JSON tui";
+        }
+    }
+
+}
+//---------------------------------------------------------------------------
 void ofApp::offScreenMarkers() {
     mFboSingle.begin();
     ofSetColor(0, 0, 0, 255);
@@ -313,6 +367,11 @@ void ofApp::offScreenMarkers() {
         mCamGrabber.at(mCurrentCamId)->drawCropImg();
         mCamGrabber.at(mCurrentCamId)->drawCropRoi();
         break;
+    case CAMERA_CALIBRATION:
+        ofSetColor(255);
+        mImageDetector.draw(0, 0);
+        break;
+
     case DEBUG_COLOR:
     {
         ofSetColor(255);
@@ -368,14 +427,14 @@ void ofApp::offScreenMarkers() {
         ofSetColor(255);
         ofPushMatrix();
         //mBaseGrid.draw(200, 1080 - 950, 1920 * 0.9, 1080 * 0.9);
-        
+
         mBaseGrid.draw(0, 40, 1920, 1080);// , 1920, 1080);
         ofPopMatrix();
 
         //black rectangle to hide cams
         ofSetColor(0);
         ofDrawRectangle(0, 0, 1920, 240);
-        
+
 
         int j = 0;
         glm::vec2 pos;
@@ -384,7 +443,18 @@ void ofApp::offScreenMarkers() {
 
         float sqspaceX = 47.2;
         float sqspaceY = 41;
-        std::vector<glm::vec2> gridPos = {glm::vec2(620, 275)};
+
+        std::vector<glm::vec2> gridPos = {
+    glm::vec2(620, 275),
+    glm::vec2(620 , 275 + 8 * sqspaceY) };
+
+        /*
+        std::vector<glm::vec2> gridPos = {
+            glm::vec2(620, 275),
+            glm::vec2(620 + 8 * sqspaceX, 275),
+            glm::vec2(620 , 275 + 8 * sqspaceY), 
+            glm::vec2(620 + 8 * sqspaceX, 275 + 8 * sqspaceY) };
+            */
         for (auto& grid : mGridDetector) {
             pos = gridPos[j];
             grid->drawDetectedInteraction(j, pos.x, pos.y, sqsizeW, sqsizeH, sqspaceX, sqspaceY);
@@ -397,7 +467,7 @@ void ofApp::offScreenMarkers() {
        // ofSetColor(225);
        // ofDrawRectangle(0, 0, 1920, 240);
 
-        if (mCamCalibration->isActive()) {
+        if (mCamRaw->isActive()) {
             int index = 0;
             ofSetColor(255, 255);
             for (auto& gridImage : mCamGrabber) {
@@ -416,26 +486,33 @@ void ofApp::offScreenMarkers() {
         break;
 
     }
-    
-    
+
+
     mFboSingle.end();
-      
+
 }
 
 void ofApp::draw()
-{    
+{
     ofSetColor(0, 0, 0, 255);
     ofRect(0, 0, ofGetWidth(), ofGetHeight());
-    
+
 
     switch (mConfigureMode) {
 
         //display displays in square mode
     case DEBUG:
     {
-  
+
     }
         break;
+    case CAMERA_CALIBRATION:
+        ofSetColor(255);
+        mFboSingle.draw(0, 0);
+
+        mArucoDetector.at(mCurrentCamId)->calibrateCameraProcess();
+        break;
+
     case INPUT_IMG:
     case CUT_IMG:
         ofSetColor(255);
@@ -467,39 +544,42 @@ void ofApp::draw()
         break;
 
     }
-    
-    drawGUI();
 
-    mGridDetector.at(mCurrentCamId)->recordGrid();
-    int guiInfoY = 900;
-    int guiInfoX = 20;
-    if (mBSingleGrid->isActive()) {
-        guiInfoX = 1500;
-    }
-    
-    ofSetColor(255);
-    ofDrawBitmapStringHighlight("app fps: " + ofToString(ofGetFrameRate(), 0), guiInfoX, guiInfoY);
-    ofDrawBitmapStringHighlight("Current Cam: " + ofToString(mCurrentCamId) + " - " + ofToString(mGridDetector.at(mCurrentCamId)->getMaxMarkers()), guiInfoX, guiInfoY + 15);
-    ofDrawBitmapStringHighlight("Detected Markers: " + ofToString(mMaxMarkers), guiInfoX, guiInfoY + 15 * 2);
-    ofDrawBitmapStringHighlight("Highlight Marker Id: " + ofToString(mHighlightMarkerId), guiInfoX, guiInfoY + 15 * 3);
+    if (mDrawGui) {
+        drawGUI();
 
-
-    if (!mBSingleGrid->isActive()) {
-        int i = 0;
-        for (auto& videoName : camlist) {
-            if (i == mCurrentCamId)
-                ofSetColor(255);
-            else
-                ofSetColor(100);
-            ofDrawBitmapStringHighlight("Video: " + to_string(videoName.id) + " - " + videoName.deviceName, 1650, 900 + i * 15);
-            i++;
+        mGridDetector.at(mCurrentCamId)->recordGrid();
+        int guiInfoY = 900;
+        int guiInfoX = 15;
+        if (mBSingleGrid->isActive()) {
+            guiInfoX = 1500;
         }
+
+        ofSetColor(255);
+        ofDrawBitmapStringHighlight("app fps: " + ofToString(ofGetFrameRate(), 0), guiInfoX, guiInfoY);
+        ofDrawBitmapStringHighlight("Current Cam: " + ofToString(mCurrentCamId) + " - " + ofToString(mGridDetector.at(mCurrentCamId)->getMaxMarkers()), guiInfoX, guiInfoY + 15);
+        ofDrawBitmapStringHighlight("Detected Markers Raw: " + ofToString(mNumMarkersRaw), guiInfoX, guiInfoY + 15 * 2);
+        ofDrawBitmapStringHighlight("Detected Markers: " + ofToString(mNumMarkers) + "  Max:" + ofToString(mMaxMarkers), guiInfoX, guiInfoY + 15 * 3);
+        ofDrawBitmapStringHighlight("Highlight Marker Id: " + ofToString(mHighlightMarkerId), guiInfoX, guiInfoY + 15 * 4);
+        ofDrawBitmapStringHighlight("Cam Calibration Frame: " + ofToString(mArucoDetector.at(0)->getCalibrationCount()), guiInfoX, guiInfoY + 15 * 5);
+
+        if (!mBSingleGrid->isActive()) {
+            int i = 0;
+            for (auto& videoName : camlist) {
+                if (i == mCurrentCamId)
+                    ofSetColor(255);
+                else
+                    ofSetColor(100);
+                ofDrawBitmapStringHighlight("Video: " + to_string(videoName.id) + " - " + videoName.deviceName, 1650, 900 + i * 15);
+                i++;
+            }
+        }
+
+        ofDrawBitmapStringHighlight(mTableLocation, 1650, 840);
+        ofDrawBitmapStringHighlight(mTableName, 1650, 860);
+        ofDrawBitmapStringHighlight(mUrl, 1650, 880);
     }
 
-    ofDrawBitmapStringHighlight(mTableLocation, 1650, 840);
-    ofDrawBitmapStringHighlight(mTableName, 1650, 860);
-    ofDrawBitmapStringHighlight(mUrl, 1650, 880);
-    
   // ofDrawBitmapStringHighlight("cam fps: " + ofToString(grabber.getGrabber(, 0), 20, ofGetHeight() - 40);
 }
 
@@ -511,7 +591,7 @@ void ofApp::mouseMoved(int x, int y) {
 
 void ofApp::mousePressed(int x, int y, int button) {
     if (mConfigureMode == GRID_POS && ofGetKeyPressed(OF_KEY_SHIFT)) {
-        
+
         if (mHighlightMarkerId >= 0 && mHighlightMarkerId < mGridDetector.at(mCurrentCamId)->getMaxMarkers()) {
             mGridDetector.at(mCurrentCamId)->setGridPos(glm::vec2(x, y), mHighlightMarkerId);
             mGridDetector.at(mCurrentCamId)->setHighlightMarkerId(mHighlightMarkerId);
@@ -594,10 +674,6 @@ void ofApp::keyReleased(int key)
         mArucoDetector.at(mCurrentCamId)->toggleMarkerInfo();
         break;
 
-    case 't':
-                 
-        break;
-
     case 'r':
         mRefimentAruco = !mRefimentAruco;
         break;
@@ -626,7 +702,7 @@ void ofApp::keyReleased(int key)
             i++;
         }
 
-   
+
         ofSaveJson("img.json", writer);
         break;
     }
@@ -638,8 +714,16 @@ void ofApp::keyReleased(int key)
         mGridDetector.at(mCurrentCamId)->cleanDuplicatePos();
         break;
 
-    case 'u':
-
+    case 'j':
+        setupCamCalibration();
+        break;
+    case 'k':
+        mArucoDetector.at(mCurrentCamId)->captureCalibrate(); //frame capture 
+        break;
+    case 'l':
+        for (auto& arucoDector : mArucoDetector) {
+            arucoDector->loadCameraCalibration();
+        }
         break;
 
     case 'z':
@@ -662,12 +746,44 @@ void ofApp::keyReleased(int key)
         mCityIo->computeGeoGrid();
         break;
     case 'n':
-        mCityIo->executePostGeoGrid(mGridDetector.at(mCurrentCamId)->getGridInter());
+        mCityIo->executePostGeoGrid(mGridArea);
         break;
+    case 'm':
+    {
+        std::map<int, int> randomv;
+        for (int i = 0; i < 256; i++) {
+            int v = i;
+            randomv.insert(std::pair<int, int>(i, 30));
+        }
 
+        mCityIo->executePostGeoGrid(randomv);
+
+        break;
+    }
+    case 'g' :
+        mDrawGui = !mDrawGui;
+        break;
+    case 't':
+        //send json 
+        
+    {
+        ofFile file("tui.json");
+        if (file.exists()) {
+            ofJson tuijson;
+            tuijson  << file;
+            //std::string tuijson = tuijson.dump();
+            ofLog(OF_LOG_NOTICE) << tuijson.dump(4);
+            mCityIo->excuteGetRequestTUI(tuijson);
+        }
+        else {
+            ofLog(OF_LOG_NOTICE) <<"not found";
+        }
+
+        break;
+    }
     default:
         break;
-    } 
+    }
 
 
 
@@ -732,7 +848,7 @@ void ofApp::drawGUI() {
         mAccurancy->draw();
         mBSingleGrid->draw();
         mBFullGrid->draw();
-        mCamCalibration->draw();
+        mCamRaw->draw();
         mBGridSelect->draw();
         mCamCalibration->draw();
         break;
@@ -753,28 +869,30 @@ void ofApp::updateGUI() {
         mAccurancy->update();
         mBSingleGrid->update();
         mBFullGrid->update();
-        mCamCalibration->update();
+        mCamRaw->update();
         mBGridSelect->update();
         mCamCalibration->update();
         break;
     }
 
     if (mAccurancy->isActive()) {
+        /*
         for (auto& grid : mGridDetector) {
-            grid->setWindowIter(12);
+            //grid->setWindowIter(12);
         }
-        updateUDP();
+       // updateUDP();
     }
     else {
         for (auto& grid : mGridDetector) {
-            grid->setWindowIter(2);
+            //grid->setWindowIter(2);
         }
+        */
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::exit() {
     mUDPConnectionRadar.Close();
-    mUDPConnectionGrid.Close();
+    mUDPConnectionTablet.Close();
     mUDPConnectionTable.Close();
 }
