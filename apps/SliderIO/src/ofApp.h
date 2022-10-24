@@ -6,6 +6,7 @@
 #include "DatGui.h"
 #include "CityIO.h"
 #include "ModuleLayer.h"
+#include "ofxFontStash2.h"
 
 
 class ofApp : public ofBaseApp{
@@ -56,4 +57,12 @@ class ofApp : public ofBaseApp{
 
         std::vector<ModuleLayerRef> mModulesGui;
 
+        ofJson mTUIJson;
+
+        bool mInteraction;
+
+        string mTableName;
+        
+        string mDesTxt;
+        ofTrueTypeFont	verdana18;
 };

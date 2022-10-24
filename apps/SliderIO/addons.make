@@ -1,4 +1,5 @@
 ofxDatGui
+ofxFontStash2
 ofxPoco
 ofxSSLManager
 ofxIO
