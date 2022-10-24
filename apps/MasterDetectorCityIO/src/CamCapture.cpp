@@ -105,13 +105,15 @@ bool CamCapture::updateImage() {
       // mFboResolution.end();
       // ofLog(OF_LOG_NOTICE) << " " << newFrame << " ";
     }
-  } else if(mEnableRemote) {
+  }
+  else {
+      /*/if (mEnableRemote) {
       mSpoutReceiver.receive(mSpoutTex);
-      
+
       temp.begin();
       mSpoutTex.draw(0, 0);
       temp.end();
-
+      s
       ofTexture tex = temp.getTexture();
       tex.readToPixels(mSpoutPixels);
 
@@ -120,14 +122,17 @@ bool CamCapture::updateImage() {
     // mVideoInput.update();
     // newFrame = mVideoInput.isFrameNew();
   }
+
+  */
+  }
   return newFrame;
 }
 
 //-----------------------------------------------------------------------------
 ofPixels & CamCapture::getImgPixels() {
-    if (mActivateCam) {
+    //if (mActivateCam) {
         return mCam.getPixels();
-    }
+   /* }
     else if(mEnableRemote) {
        // auto pixels = mNdiImage.getPixels();
        // mNdiImage.update();
@@ -137,6 +142,7 @@ ofPixels & CamCapture::getImgPixels() {
         return mSpoutPixels;
     }
   //return mCam.getPixels();
+  */
 }
 
 //-----------------------------------------------------------------------------
@@ -154,18 +160,28 @@ void CamCapture::drawImage(int x, int y, int w, int h) {
   if (mActivateCam) {
     mCam.draw(x, y, w, h);
   }
-  else if (mEnableRemote) {
-    mSpoutTex.draw(x, y, w, h);
+  else {
+      mVideoInput.draw(x, y, w, h);
+  }/*
+      / if (mEnableRemote) {
+    mVid.draw(x, y, w, h);
   }
+  */
 }
 
 //-----------------------------------------------------------------------------
 void CamCapture::drawImage(int x, int y) {
   if (mActivateCam) {
     mCam.draw(x, y, mDim.x, mDim.y);
-  } else if (mEnableRemote) {
-      mSpoutTex.draw(x, y, mDim.x, mDim.y);
   }
+  else {
+      mVideoInput.draw(x, y, mDim.x, mDim.y);
+  }
+  
+  /*if (mEnableRemote) {
+      //mSpoutTex.draw(x, y, mDim.x, mDim.y);
+  }
+  */
 }
 
 //-----------------------------------------------------------------------------

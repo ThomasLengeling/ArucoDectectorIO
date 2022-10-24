@@ -27,7 +27,9 @@ enum debugConfiguration {
     GRID_POS = 2,
     DEBUG_COLOR = 3,
     RELEASE = 4,
-    DEBUG = 5
+    DEBUG = 5,
+    PERSPECTIVE_IMG = 6,
+    CAMERA_CALIBRATION = 7
 };
 
 
@@ -68,6 +70,7 @@ public:
     //draw
     void drawGUI();
 
+
     //cams
     int mNumCams;
     int mCamFps;
@@ -83,9 +86,11 @@ public:
     std::string   mUDPRadarIp;
     int           mUDPRadarPort;
 
-    ofxUDPManager mUDPConnectionGrid;
-    std::string   mUDPGridIp;
-    int           mUDPGridPort;
+    //
+    ofxUDPManager mUDPConnectionTablet;
+    std::string   mUDPTabletIp;
+    int           mUDTabletPort;
+    void          updateTabletJson();
 
 
     // 4 camera render
@@ -103,7 +108,8 @@ public:
 
     // aruco detector
     std::vector < ArucoDetectorRef> mArucoDetector;
-    int mMaxMarkers;
+    int mNumMarkers;
+    int mNumMarkersRaw;
     bool mRefimentAruco;
     bool mEnableCrop;
 
@@ -120,18 +126,19 @@ public:
     //grid calculations
 
     glm::vec2 posgrid;
+    int mMaxMarkers;
 
-    int numMarkers;
 
 
     //GUI
-    bool            mDrawGUI;
+    bool            mDrawGui;
     ofxDatSliderRef mGammaValue;
     ofxDatSliderRef mAlphaValue;
     ofxDatSliderRef mBetaValue;
 
     ofxDatButtonRef mBSingleGrid;
     ofxDatButtonRef mBFullGrid;
+    ofxDatButtonRef mCamRaw;
     ofxDatButtonRef mCamCalibration;
     ofxDatButtonRef mAccurancy;
     ofxDatMatrixRef mBGridSelect;
@@ -145,8 +152,8 @@ public:
 
     std::vector<ofVideoDevice> camlist;
 
-    std::vector< std::map<int, int> > mPrevGridArea;
-    std::vector< std::map<int, int> > mGridArea;
+    std::map<int, int>  mPrevGridArea;
+    std::map<int, int>  mGridArea;
 
     std::map<int, int>  mPrevGridAreaS;
     std::map<int, int>  mGridAreaS;
@@ -158,5 +165,7 @@ public:
     std::string mTableName;
     std::string mTableLocation;
     std::string mUrl;
+
+
 
 };

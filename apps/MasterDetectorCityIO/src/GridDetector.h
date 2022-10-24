@@ -51,6 +51,7 @@ public:
     int getId(){return mId;}
 
     int getNumMarkers(){return mNumMarkers;}
+    int getNumMarkersAbolute() { return mNumMakersAbsolute; }
 
     void setMaxMarkers(int max);
     int getMaxMarkers(){return mMaxMarkers;}
@@ -128,7 +129,9 @@ private:
     int mMaxMarkers;
 
     //number of markers detected
-    int mNumMarkers;
+    int mNumMarkers; //raw
+
+    int mNumMakersAbsolute; 
 
     //debug grid
     bool mDebugGrid;

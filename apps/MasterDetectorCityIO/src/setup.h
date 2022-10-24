@@ -12,10 +12,11 @@ Living Line
 
 void ofApp::setupValues() {
 
-    mDrawGUI = true;
+    mDrawGui = true;
     mRefimentAruco = true;
     mCurrentCamId = 0;
-    mMaxMarkers = 0;
+    mNumMarkersRaw = 0;
+    mNumMarkers = 0;
 
     mGridLocation.x = 863;
     mGridLocation.y = 257;
@@ -46,7 +47,7 @@ void ofApp::setupValues() {
 
     mEnableColorPros = true;
 
-    mGridArea.resize(mNumCams);
+    //mGridArea.resize(mNumCams);
    
 }
 //-----------------------------------------------------------------------------
@@ -98,8 +99,8 @@ void ofApp::setupUDPConnection() {
                 mUDPRadarPort = int(net["network_" + to_string(i)]["port"]);
             }
             else if (i == 2) {
-                mUDPGridIp = net["network_" + to_string(i)]["ip"].get<std::string>();
-                mUDPGridPort = int(net["network_" + to_string(i)]["port"]);
+                mUDPTabletIp = net["network_" + to_string(i)]["ip"].get<std::string>();
+                mUDTabletPort = int(net["network_" + to_string(i)]["port"]);
             }
             i++;
         }
@@ -109,8 +110,8 @@ void ofApp::setupUDPConnection() {
         ofLog(OF_LOG_NOTICE) << "Loaded: UDP Radar:";
         ofLog(OF_LOG_NOTICE) << "IP: " << mUDPRadarIp << " Port: " << mUDPRadarPort;
 
-        ofLog(OF_LOG_NOTICE) << "Loaded: UDP Grid:";
-        ofLog(OF_LOG_NOTICE) << "IP: " << mUDPGridIp << " Port: " << mUDPGridPort;
+        ofLog(OF_LOG_NOTICE) << "Loaded: UDP Tablet:";
+        ofLog(OF_LOG_NOTICE) << "IP: " << mUDPTabletIp << " Port: " << mUDTabletPort;
     }
     else {
         mUDPIp = "127.0.0.1";
@@ -131,10 +132,12 @@ void ofApp::setupUDPConnection() {
     settingsTable.blocking = false;
     mUDPConnectionTable.Setup(settingsTable);
 
-    ofxUDPSettings settingsGrid;
-    settingsGrid.sendTo(mUDPGridIp, mUDPGridPort);
-    settingsGrid.blocking = false;
-    mUDPConnectionGrid.Setup(settingsGrid);
+
+    //tablets
+    ofxUDPSettings settingsTablet;
+    settingsTablet.receiveOn(mUDTabletPort);
+    settingsTablet.blocking = false;
+    mUDPConnectionTablet.Setup(settingsTablet);
 
 
     //send a simple msg.
@@ -148,7 +151,6 @@ void ofApp::setupUDPConnection() {
 void ofApp::setupGUI() {
     int sliderStartX =  250;
     int sliderStartY = ofGetWindowHeight() - 200;
-
    
     mAccurancy = ofxDatButton::create();
     mAccurancy->button = new ofxDatGuiToggle("Accurancy", true);
@@ -192,22 +194,34 @@ void ofApp::setupGUI() {
         });
 
 
+    mCamRaw = ofxDatButton::create();
+    mCamRaw->setActivation(false);
+    mCamRaw->button = new ofxDatGuiToggle("Cameras");
+    mCamRaw->button->setPosition(sliderStartX, sliderStartY + 60);
+    mCamRaw->button->setWidth(100, .5);
+    mCamRaw->button->onButtonEvent([&](ofxDatGuiButtonEvent v) {
+        mCamRaw->toggle();
+        });
+
     mCamCalibration = ofxDatButton::create();
     mCamCalibration->setActivation(false);
-    mCamCalibration->button = new ofxDatGuiToggle("Cameras");
-    mCamCalibration->button->setPosition(sliderStartX, sliderStartY + 60);
+    mCamCalibration->button = new ofxDatGuiToggle("Cam Calibrations");
+    mCamCalibration->button->setPosition(sliderStartX, sliderStartY + 90);
     mCamCalibration->button->setWidth(100, .5);
     mCamCalibration->button->onButtonEvent([&](ofxDatGuiButtonEvent v) {
-        mCamCalibration->toggle();
+        if (mCamCalibration->isActive()) {
+            setupCamCalibration();
+            ofLog(OF_LOG_NOTICE) << "Setup Camera Calibration: " << std::endl;
+        }
         });
 
 
     mBGridSelect = ofxDatMatrix::create();
-    mBGridSelect->matrix = new ofxDatGuiMatrix("Grid Matrix", 1, true);
+    mBGridSelect->matrix = new ofxDatGuiMatrix("Grid Matrix", mNumCams, true);
     mBGridSelect->matrix->setRadioMode(true);
     mBGridSelect->matrix->setOpacity(0.8);
     mBGridSelect->matrix->setWidth(390, .5);
-    mBGridSelect->matrix->setPosition(sliderStartX, sliderStartY + 90);
+    mBGridSelect->matrix->setPosition(sliderStartX, sliderStartY + 120);
     mBGridSelect->matrix->onMatrixEvent([&](ofxDatGuiMatrixEvent v) {
         mCurrentCamId = v.child;
         mHighlightMarkerId = 0;
@@ -261,7 +275,13 @@ void ofApp::setupArucoDetector() {
 
 //-----------------------------------------------------------------------------
 void ofApp::setupCamCalibration() {
-
+    if (mArucoDetector.size() > 0) {
+    mArucoDetector.at(0)->toggleCamCalibration(true);
+    }
+    else {
+        ofLog(OF_LOG_NOTICE) << "Error setup calibration";
+    }
+    mConfigureMode = CAMERA_CALIBRATION;
     ofLog(OF_LOG_NOTICE) << "done setup calibration";
 }
 

@@ -26,7 +26,6 @@ class ArucoDetector;
 typedef std::shared_ptr<ArucoDetector> ArucoDetectorRef;
 
 #define QR_4x4_50   0
-#define QR_6x6_1000 11
 
 class ArucoDetector{
 public:
@@ -57,18 +56,34 @@ public:
     int getMinId(){return mMinFoundId;}
     int getMaxId(){return mMaxFoundId;}
 
-    void calibrateCamera();
-
+    //params
     void generateDetectorParams();
     void generateDetectorParams(std::string file);
+    bool readDetectorParameters(std::string filename, cv::Ptr< cv::aruco::DetectorParameters>& params);
 
     //calibration
-    bool readDetectorParameters(std::string filename, cv::Ptr< cv::aruco::DetectorParameters> & params);
-    
-    bool saveCameraParams(const std::string &filename, cv::Size imageSize,
-                         float aspectRatio, int flags,
-                         const cv::Mat & cameraMatrix, const cv::Mat & distCoeffs,
-                         double totalAvgErr);
+    void toggleCamCalibration(bool value = true) {
+        calibrationProcess = value;
+    }
+
+    void captureCalibrate() {
+        captureFrame = true;
+    }
+    int getCalibrationCount() { return captureCount; }
+
+
+    void calibrateCameraProcess();
+
+    void resetCalibration();
+
+    void loadCameraCalibration();
+
+    bool saveCameraParams(const std::string& filename, cv::Size imageSize,
+        float aspectRatio, int flags,
+        const cv::Mat& cameraMatrix, const cv::Mat& distCoeffs,
+        double totalAvgErr);
+
+    bool readCameraCalibration(std::string filename, cv::Mat& camMatrix, cv::Mat& distCoeffs);
 
 private:
 
@@ -93,4 +108,22 @@ private:
 
     bool mMarkerInfo;
 
+
+    //calibration
+    bool calibrationProcess;
+    bool captureFrame;
+
+    bool calibratedCam;
+
+    bool useCalibration;
+    int  captureCount;
+
+    cv::Size imgSize;
+    int calibrationFlags;
+
+    cv::Mat cameraMatrix;
+    cv::Mat distCoeffs;
+
+    vector < vector < vector < cv::Point2f > > > caliAllCorners;
+    vector< vector< int > > caliAllIds;
 };
