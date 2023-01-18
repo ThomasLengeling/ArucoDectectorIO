@@ -7,7 +7,7 @@ CityIO::CityIO(std::string table) {
     //fill default types
     //aruco code + types
     mTypes.insert(std::make_pair("Commercial R&D - lowrise", 30));
-    mTypes.insert(std::make_pair("Commercial officestui - highrise", 7));
+    mTypes.insert(std::make_pair("Commercial offices - highrise", 7));
     mTypes.insert(std::make_pair("Commercial offices and R&D  - medium rise", 21));
     mTypes.insert(std::make_pair("Cultural - entertainment", 36));
     mTypes.insert(std::make_pair("MIXED-USE-OFFICE - highrise",10));
@@ -16,8 +16,8 @@ CityIO::CityIO(std::string table) {
     mTypes.insert(std::make_pair("MIXED-USE-RESIDENTIAL - medium rise",13));
     mTypes.insert(std::make_pair("Public Parks & Open Space",43));
     mTypes.insert(std::make_pair("Residentail - high rise",38));
-    mTypes.insert(std::make_pair("Residential - low rise",17));
-    mTypes.insert(std::make_pair("Residential - medium rise", 34));
+    mTypes.insert(std::make_pair("Residential - low rise",34));  //or 17
+    mTypes.insert(std::make_pair("Residential - medium rise", 17));  //34
     mTypes.insert(std::make_pair("Higher Education", 48));
     mTypes.insert(std::make_pair("Primary Education", 6));
 
@@ -143,7 +143,7 @@ void CityIO::computeGeoGrid() {
     streamRequest = excuteGetRequest(request);
 
     for (auto& types : streamRequest.items()) {
-        int height = 0;
+        std::vector<int> height;
         ofLog(OF_LOG_NOTICE) << "type: " << types.value() << " " << types.key() << std::endl;
 
         string name = types.value()["name"].get<string>();
@@ -151,7 +151,12 @@ void CityIO::computeGeoGrid() {
         //    height = types.value()["height"].get<int>();
        // }
         if (types.value()["height"].is_array()) {
-            height = types.value()["height"][1].get<int>();
+            height = { types.value()["height"][0].get<int>(),
+                types.value()["height"][1].get<int>(),
+                types.value()["height"][2].get<int>() };
+        }
+        if( types.value()["height"].is_number_integer()) {
+            height = { types.value()["height"].get<int>(), types.value()["height"].get<int>(),  types.value()["height"].get<int>()};
         }
 
         ofColor col(types.value()["color"][0].get<int>(),
@@ -351,7 +356,19 @@ void CityIO::executePostGeoGrid(std::map<int, int>  arucotags, bool overide) {
             if (interactive) {
                 ofColor col = ofColor::fromHex(mDefaultColor[arucoId]);
                 piece["color"] = ofJson::array({ (int)col.r, (int)col.g, (int)col.b, geogriddata.at(id)["properties"]["color"][3] });
-                piece["height"] = int(mDefaultHeight[arucoId]); //get aruco value;
+
+                if (arucoId == -1) {
+                    piece["height"] = { 0, 0, 0 };
+                }
+                else {
+                    piece["height"] = { mDefaultHeight[arucoId].at(0),
+                                        mDefaultHeight[arucoId].at(1),
+                                        mDefaultHeight[arucoId].at(2) };
+                }//get aruco value;
+                //if (geogriddata.at(id)["properties"]["height"].is_array()) {
+                //    piece["height"] = geogriddata.at(id)["properties"]["height"];
+               // }
+
 
                 piece["name"] = std::string(mDefaultTypesRev[arucoId]);
                 if (arucoId == 4 || arucoId == 8) {
@@ -364,7 +381,10 @@ void CityIO::executePostGeoGrid(std::map<int, int>  arucotags, bool overide) {
             }
             else {
                 piece["color"] = ofJson::array({ geogriddata.at(id)["properties"]["color"][0], geogriddata.at(id)["properties"]["color"][1],geogriddata.at(id)["properties"]["color"][2], geogriddata.at(id)["properties"]["color"][3] });
-                piece["height"] = geogriddata.at(id)["properties"]["height"].get<int>();
+                
+                //if (geogriddata.at(id)["properties"]["height"].is_array()) {
+                    piece["height"] = geogriddata.at(id)["properties"]["height"];
+                //}
                 piece["name"] = geogriddata.at(id)["properties"]["name"].get<string>();
 
                 

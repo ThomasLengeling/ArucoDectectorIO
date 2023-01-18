@@ -53,7 +53,9 @@ private:
     std::map<std::string, int > mDefaultTypes;
     std::map<int, std::string > mDefaultTypesRev;
     std::map<int, int > mDefaultColor;
-    std::map<int, int > mDefaultHeight;
+    //std::map<int, int > mDefaultHeight;
+
+    std::map<int, std::vector<int> > mDefaultHeight;
 
 
     std::map<int, int> mInteractiveIds;

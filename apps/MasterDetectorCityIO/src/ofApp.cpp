@@ -19,7 +19,7 @@ void ofApp::setup()
 
     // oF app
     ofSetVerticalSync(false);
-    ofSetFrameRate(30);
+    ofSetFrameRate(60);
     ofSetBackgroundAuto(false);
     //ofBackground(0);
 
@@ -48,6 +48,7 @@ void ofApp::setup()
 
    // spaecialGridInter01 = {37, 38, 39, 40, 41, 42, 60, 61, 62, 63, 64, 65};
 
+    mCityIo->computeGeoGrid();
 }
 
 
@@ -179,7 +180,7 @@ void ofApp::update()
 
     updateUDP();
 
-    updateTabletJson();
+    //updateTabletJson();
 
     if (mCalculateGrid) {
         mGridDetector.at(mCurrentCamId)->generateGridPos(mGridLocation.x, mGridLocation.y, mGridStep.x, mGridStep.y);
@@ -338,10 +339,11 @@ void ofApp::updateTabletJson() {
 
     string message = udpMessage;
     if (message != "") {
+       // ofLog(OF_LOG_NOTICE) << "got msg JSON";
         if (udpMessage[0] == '{') {
             ofJson tuijson = ofJson::parse(message);
             //std::string tuijson = tuijson.dump();
-            ofLog(OF_LOG_NOTICE) << tuijson.dump(4);
+           // ofLog(OF_LOG_NOTICE) << tuijson.dump(4);
             mCityIo->excuteGetRequestTUI(tuijson);
         }
         else {

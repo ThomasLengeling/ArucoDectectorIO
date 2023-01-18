@@ -117,20 +117,20 @@ void ArucoDetector::setupCalibration(int markersX, int markersY) {
   detectorParams = cv::aruco::DetectorParameters::create();
 
   detectorParams->adaptiveThreshWinSizeMin = 3; //20
-  detectorParams->adaptiveThreshWinSizeMax = 37; //50
+  detectorParams->adaptiveThreshWinSizeMax = 44; //50
   detectorParams->adaptiveThreshWinSizeStep = 4;
 
   detectorParams->perspectiveRemovePixelPerCell = 12; // 10
-  detectorParams->perspectiveRemoveIgnoredMarginPerCell = .15; //.15  0.04
+  detectorParams->perspectiveRemoveIgnoredMarginPerCell = .12; //.15  0.04
   detectorParams->errorCorrectionRate = 0.4;
-  detectorParams->maxErroneousBitsInBorderRate = 0.6;//35
+  detectorParams->maxErroneousBitsInBorderRate = 0.65;//35
   detectorParams->minOtsuStdDev = 5;//
   //detectorParams->maxErroneousBitsInBorderRate = 0.1;
   //detectorParams->maxMarkerPerimeterRate = 5;
 
   detectorParams->maxErroneousBitsInBorderRate = 15;
 
-  detectorParams->polygonalApproxAccuracyRate = 0.05;//.1
+  detectorParams->polygonalApproxAccuracyRate = 0.01;//.1
 
   //detectorParams->markerBorderBits = 0;
 
