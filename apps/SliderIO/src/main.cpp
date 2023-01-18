@@ -5,7 +5,7 @@
 //========================================================================
 int main(){
     ofGLFWWindowSettings settings;
-    settings.setSize(1280, 720);
+    settings.setSize(1920, 1200);
     settings.windowMode = OF_WINDOW;
     settings.resizable = false;
     settings.decorated = false;

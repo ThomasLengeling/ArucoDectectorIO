@@ -14,7 +14,9 @@
   {
     "network_2": {
       "ip": "192.168.1.14",
-      "port": 15801
+      "port": 15801,
+      "name": "Kendall Square",
+      "txt": " The Kendal Square District is a 42-acre urban renewal zone located between MIT’s campus in Cambridge \n Massachusetts and the Charles River. Over the past three decades, this area has become one of the most prolific \n research and development districts in the country, attracting thousands of business across a range of industries \n from renewable energy and robotics, to artificial intelligence and life-sciences. Despite the success, the area \n functions poorly as a community. With little housing and few amenities, most workers commute each day, leaving \n the area  lifeless after hours. \n This CityScope table presents a hypothetical “thought experiment” scenarios that could dramatically reduce emissions \n while improving quality of life and the economic potential of the area. Interventions include deep retrofit of existing \n buildings, live-work symmetry for net-zero commuting, walkable access to amenities, hyper-efficient transformable \n housing, lightweight autonomous mobility, production of resources near the point of consumption, low-carbon diet, \n and high-density baseload electrical power. \n By manipulating building types and land-uses on developable sites, stakeholders can iterate and scenario test while \n understanding understand the urban performance across multiple indicators displayed on the screen and projected \n on the model. You are encouraged to test your intuition."
     }
   }
 ]

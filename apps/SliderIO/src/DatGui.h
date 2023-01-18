@@ -19,6 +19,8 @@ typedef std::shared_ptr<ofxDatToggle> ofxDatToggleRef;
 class ofxDatMatrix;
 typedef std::shared_ptr<ofxDatMatrix> ofxDatMatrixRef;
 
+class ofxDatLabel;
+typedef std::shared_ptr<ofxDatLabel> ofxDatLabelRef;
 
 
 class ofxDatSlider {
@@ -96,11 +98,12 @@ public:
 
 class ofxDatMatrix {
 public:
-    ofxDatMatrix() {
+    ofxDatMatrix(std::vector<std::string> labels) {
         mActivate = false;
+        mLabels = labels;
     }
-    static ofxDatMatrixRef create() {
-        return std::make_shared<ofxDatMatrix>();
+    static ofxDatMatrixRef create(std::vector<std::string> lb) {
+        return std::make_shared<ofxDatMatrix>(lb);
     }
 
     void draw() {
@@ -115,6 +118,33 @@ public:
     ofParameter<bool>     ofParamBoolean;
     ofEventListener       mMatrixListener;
     bool                  mActivate;
+    std::vector<std::string> mLabels;
+    int                    mCurrentActive;
+    std::string                    mCurrentName;
+
+};
+
+class ofxDatLabel {
+public:
+    ofxDatLabel() {
+        name = "";
+    }
+    static ofxDatLabelRef create() {
+        return std::make_shared<ofxDatLabel>();
+    }
+
+    void draw() {
+        mLabel->draw();
+    }
+
+    void update() {
+        mLabel->update();
+    }
+
+    ofxDatGuiLabel * mLabel;
+    ofEventListener       mLabelListener;
+    ofParameter<bool>     ofParamBoolean;
+    std::string           name;
 
 };
 
