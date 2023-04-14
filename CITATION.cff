@@ -1,5 +1,6 @@
 cff-version: 1.1.0
 message: "If you use this software, please cite it as below."
+doi: 10.5281/zenodo.7828556
 authors:
   - family-names: "Sanchez Lengeling"
     given-names: "Thomas"
