@@ -48,7 +48,7 @@ void ofApp::setup()
 
    // spaecialGridInter01 = {37, 38, 39, 40, 41, 42, 60, 61, 62, 63, 64, 65};
 
-    mCityIo->computeGeoGrid();
+    mCityIo->computeTableProperties();
 }
 
 
@@ -190,6 +190,7 @@ void ofApp::update()
 
 
 }
+
 //---------------------------------------------------------------------------
 void ofApp::updateUDP() {
     // calculate probabilyt and clean nois
@@ -207,16 +208,21 @@ void ofApp::updateUDP() {
             if (mGridDetector.at(mCurrentCamId)->isDoneCleaner()) {
 
                 std::map<int, int> gridInterSingle = mGridDetector.at(mCurrentCamId)->getGridInter();
-               // mUDPConnectionTable.Send(udpMsg.c_str(), udpMsg.length());
 
                 mPrevGridAreaS = mGridAreaS;
                 mGridAreaS = gridInterSingle;
 
                 if (mPrevGridAreaS != mGridAreaS) {
 
-                    mCityIo->executePostGeoGrid(mGridAreaS, false); //overide interative
+                    //mCityIo->executePostGeoGrid(mGridAreaS, false); //overide interative
+                    //ofJson griddata = mCityIo->getUpdatedGeoGridData();
 
-                    ofLog(OF_LOG_NOTICE) << "sent data " << std::endl;
+                    //std::string tuijson = griddata.dump();
+                    //udpjson = griddata.dump();
+                    //ofLog(OF_LOG_NOTICE) << "json: " << tuijson << std::endl;
+                    //mUDPConnectionTable.Send(tuijson.c_str(), tuijson.length());
+
+                    //ofLog(OF_LOG_NOTICE) << "sent data " << std::endl;
 
                 }
             }
@@ -232,7 +238,7 @@ void ofApp::updateUDP() {
 
             if (gridDetector->isDoneCleaner()) {
                 gridDetector->calculateProbabilityGrid();
-                   doneClean++;
+                doneClean++;
             }
         }
 
@@ -248,81 +254,35 @@ void ofApp::updateUDP() {
                 mGridArea.insert(gridInt.begin(), gridInt.end());
 
             }
-            //std::map<int, int> gridInter01 = mGridDetector.at(0)->getGridInter();
-            //std::map<int, int> gridInter02 = mGridDetector.at(1)->getGridInter();
-            //std::map<int, int> gridInter03 = mGridDetector.at(2)->getGridInter();
-            //std::map<int, int> gridInter04 = mGridDetector.at(3)->getGridInter();
-
-            //mGridArea/
-
-            //mPrevGridArea = mGridArea;
-            //mGridArea.clear();
-
-           // mGridArea.insert(gridInter01.begin(), gridInter01.end());
-           // mGridArea.insert(gridInter02.begin(), gridInter02.end());
-           // mGridArea.insert(gridInter03.begin(), gridInter03.end());
-           // mGridArea.insert(gridInter04.begin(), gridInter04.end());
-
 
             if (mPrevGridArea != mGridArea) {
-                /*ofLog(OF_LOG_NOTICE) << std::endl;
-                for (auto& val : mGridArea) {
-                    ofLog(OF_LOG_NOTICE) << val.first << " " << val.second;
+
+                mCityIo->printValueDifferences(mPrevGridArea, mGridArea);
+
+                if (mGeoGridUDP) {
+                    mCityIo->executePostGeoGrid(mGridArea, false); //overide interative
+
+                    //send the data in a json format
+                    ofJson griddata = mCityIo->getUpdatedGeoGridData();
+                    std::string tuijson = griddata.dump();
+                    udpjson = griddata.dump();
+                    //ofLog(OF_LOG_NOTICE) << "json: " << tuijson << std::endl;
+                    mUDPConnectionGeoGrid.Send(tuijson.c_str(), tuijson.length());
+
+                    ofLog(OF_LOG_NOTICE) << "sent geogrid data to cityIO: "<< std::endl;
                 }
-                */
+                else {
 
-                mCityIo->executePostGeoGrid(mGridArea, false); //overide interative
-                ofLog(OF_LOG_NOTICE) << "ready to send data to cityIO" << std::endl;
-            }
-            /*
-            std::string compandStr;
-            compandStr += "i ";
-
-
-            std::map<int, int> gridInter03 = mGridDetector.at(2)->getGridInter();
-            std::map<int, int> gridInter04 = mGridDetector.at(3)->getGridInter();
-
-
-            for (auto& grid : gridInter02) {
-
-            }
-
-            mPrevGridArea = mGridArea;
-
-            mGridArea.clear();
-            mGridArea.resize(NUM_CAM_INPUTS);
-
-            //area 1
-            mGridArea.at(0).insert(empthGrid.begin(), empthGrid.end());
-            mGridArea.at(0).insert(gridInter01.begin(), gridInter01.end());
-            mGridArea.at(0).insert(gridInter02.begin(), gridInter02.end());
-            mGridArea.at(0).insert(gridInter03.begin(), gridInter03.find(276));
-
-            //area 2
-            auto in = gridInter03.find(276);
-            mGridArea.at(1).insert(make_pair<const int&, int&>(in->first, in->second));
-
-            //area 3
-            mGridArea.at(2).insert(gridInter03.find(277), gridInter03.end());
-
-            //area 4
-            mGridArea.at(3).insert(gridInter04.begin(), gridInter04.end());
-
-
-            //send grid areas if there was a change in the grid
-            for (int i = 0; i < mPrevGridArea.size(); i++) {
-                if (mPrevGridArea.at(i) != mGridArea.at(i)) {
-                    std::string mUdpMsg = "i" + to_string(i + 1) + " ";
-                    for (auto& gridInter : mGridArea.at(i)) {
-                        mUdpMsg += std::to_string(gridInter.second) + " ";
+                    //send the data in a udp format
+                    std::string rawGrid = "i";
+                    for (size_t i = 0; i < mGridArea.size(); ++i) {
+                        rawGrid += " " + ofToString(mGridArea[i]);
                     }
-                    mUDPConnectionTable.Send(mUdpMsg.c_str(), mUdpMsg.length());
-                    mUDPConnectionRadar.Send(mUdpMsg.c_str(), mUdpMsg.length());
-                    mUDPConnectionGrid.Send(mUdpMsg.c_str(), mUdpMsg.length());
-                    //ofLog(OF_LOG_NOTICE) << "Msg: " << mUdpMsg;
+                    ofLog(OF_LOG_NOTICE) << "sent raw data to cityIO: " << std::endl;
+                    mUDPConnectionRaw.Send(rawGrid.c_str(), rawGrid.length());
                 }
+
             }
-            */
 
             for (auto& gridDetector : mGridDetector) {
                 mNumMarkers += gridDetector->getNumMarkersAbolute();
@@ -332,26 +292,7 @@ void ofApp::updateUDP() {
         }
     }
 }
-//----------------------------------------------
-void ofApp::updateTabletJson() {
-    char udpMessage[10000];
-    mUDPConnectionTablet.Receive(udpMessage, 10000);
 
-    string message = udpMessage;
-    if (message != "") {
-       // ofLog(OF_LOG_NOTICE) << "got msg JSON";
-        if (udpMessage[0] == '{') {
-            ofJson tuijson = ofJson::parse(message);
-            //std::string tuijson = tuijson.dump();
-           // ofLog(OF_LOG_NOTICE) << tuijson.dump(4);
-            mCityIo->excuteGetRequestTUI(tuijson);
-        }
-        else {
-            ofLog(OF_LOG_NOTICE) << "error UDP JSON tui";
-        }
-    }
-
-}
 //---------------------------------------------------------------------------
 void ofApp::offScreenMarkers() {
     mFboSingle.begin();
@@ -666,6 +607,10 @@ void ofApp::keyReleased(int key)
         mBFullGrid->setActivation(true);
         mConfigureMode = RELEASE;
         break;
+    case '7':
+        mUDPConnectionTable.Send(udpjson.c_str(), udpjson.length());
+        ofLog(OF_LOG_NOTICE) << "sent data to cityIO: " << udpjson.length() << std::endl;
+        break;
     case 'd':
         mBSingleGrid->setActivation(true);
         mBFullGrid->setActivation(false);
@@ -742,10 +687,10 @@ void ofApp::keyReleased(int key)
         break;
 
     case 'v':
-        mCityIo->excuteGetRequest("GEOGRID/properties/header/");
+        //mCityIo->excuteGetRequest("GEOGRID/properties/header/");
         break;
     case 'b':
-        mCityIo->computeGeoGrid();
+        //mCityIo->computeGeoGrid();
         break;
     case 'n':
         mCityIo->executePostGeoGrid(mGridArea);
@@ -775,7 +720,7 @@ void ofApp::keyReleased(int key)
             tuijson  << file;
             //std::string tuijson = tuijson.dump();
             ofLog(OF_LOG_NOTICE) << tuijson.dump(4);
-            mCityIo->excuteGetRequestTUI(tuijson);
+           // mCityIo->excuteGetRequestTUI(tuijson);
         }
         else {
             ofLog(OF_LOG_NOTICE) <<"not found";
@@ -847,7 +792,6 @@ void ofApp::drawGUI() {
     case DEBUG:
     case RELEASE:
     case INPUT_IMG:
-        mAccurancy->draw();
         mBSingleGrid->draw();
         mBFullGrid->draw();
         mCamRaw->draw();
@@ -868,7 +812,6 @@ void ofApp::updateGUI() {
     case DEBUG:
     case RELEASE:
     case INPUT_IMG:
-        mAccurancy->update();
         mBSingleGrid->update();
         mBFullGrid->update();
         mCamRaw->update();
@@ -877,24 +820,13 @@ void ofApp::updateGUI() {
         break;
     }
 
-    if (mAccurancy->isActive()) {
-        /*
-        for (auto& grid : mGridDetector) {
-            //grid->setWindowIter(12);
-        }
-       // updateUDP();
-    }
-    else {
-        for (auto& grid : mGridDetector) {
-            //grid->setWindowIter(2);
-        }
-        */
-    }
+
+
 }
 
 //--------------------------------------------------------------
 void ofApp::exit() {
-    mUDPConnectionRadar.Close();
-    mUDPConnectionTablet.Close();
+    mUDPConnectionRaw.Close();
+    mUDPConnectionGeoGrid.Close();
     mUDPConnectionTable.Close();
 }

@@ -76,22 +76,22 @@ public:
     int mCamFps;
 
 
-    // send commands
-    ofxUDPManager mUDPConnectionTable;
-    std::string   mUDPIp;
-    int           mUDPPort;
+    // send grid
+    ofxUDPManager mUDPConnectionGeoGrid;
+    std::string   mUDPGeoGridIp;
+    int           mUDPGeoGridPort;
 
-    //network for Radar communication
-    ofxUDPManager mUDPConnectionRadar;
-    std::string   mUDPRadarIp;
-    int           mUDPRadarPort;
+    //network for  raw grid data
+    ofxUDPManager mUDPConnectionRaw;
+    std::string   mUDPRawIp;
+    int           mUDPRawPort;
 
     //
-    ofxUDPManager mUDPConnectionTablet;
-    std::string   mUDPTabletIp;
-    int           mUDTabletPort;
-    void          updateTabletJson();
+    ofxUDPManager mUDPConnectionTable;
+    std::string   mUDPTableIp;
+    int           mUDTablePort;
 
+    bool mGeoGridUDP;
 
     // 4 camera render
     ofFbo mFboSingle;
@@ -122,6 +122,7 @@ public:
 
     //
     std::vector<glm::vec2> mGridSizes;
+    std::vector<glm::vec2> mGridStart;
 
     //grid calculations
 
@@ -140,7 +141,6 @@ public:
     ofxDatButtonRef mBFullGrid;
     ofxDatButtonRef mCamRaw;
     ofxDatButtonRef mCamCalibration;
-    ofxDatButtonRef mAccurancy;
     ofxDatMatrixRef mBGridSelect;
 
     bool mEnableColorPros;
@@ -165,6 +165,7 @@ public:
     std::string mTableName;
     std::string mTableLocation;
     std::string mUrl;
+    std::string udpjson;
 
 
 

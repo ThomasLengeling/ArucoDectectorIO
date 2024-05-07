@@ -45,6 +45,8 @@ public:
         return std::make_shared<GridDetector>(dim);
     }
 
+    void setGridStart(glm::vec2 pos) { mGridStart = pos; }
+
     glm::vec2 getDim(){return mGridDim;}
 
     void setId(int id);
@@ -121,6 +123,7 @@ private:
 
     //dimentions
     glm::vec2  mGridDim;
+    glm::vec2  mGridStart;
 
     //id;
     int mId;

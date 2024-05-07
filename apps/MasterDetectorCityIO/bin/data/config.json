@@ -10,12 +10,13 @@
 
   "deploy": {
     "location": "kendall",
-    "tableName": "volpe",
-    "url": "http://127.0.0.1:5000"
+    "tableName": "volpe_rd",
+    "url": "wss://cityio.media.mit.edu:443/cityio/interface",
+    "protocol":"websockets"
   },
 
   "version":{
-    "v": 0.1
+    "v": 0.2
   }
 
 }

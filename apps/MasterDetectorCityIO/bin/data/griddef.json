@@ -1,11 +1,15 @@
 {
   "grid_0": {
-    "x": 16,
-    "y": 8
+    "size_x": 16,
+    "size_y": 8,
+    "start_x": 0,
+    "start_y": 0
   },
   "grid_1": {
-    "x": 16,
-    "y": 8
+    "size_x": 16,
+    "size_y": 8,
+    "start_x": 0,
+    "start_y": 8
   }
 
 }

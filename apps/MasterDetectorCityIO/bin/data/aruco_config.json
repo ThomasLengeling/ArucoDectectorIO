@@ -1,0 +1,23 @@
+{
+  "aruco": {
+    "adaptiveThreshConstant": 7,
+    "adaptiveThreshWinSizeMax": 44,
+    "adaptiveThreshWinSizeMin": 4,
+    "adaptiveThreshWinSizeStep": 4,
+    "cornerRefinementMaxIterations": 30,
+    "cornerRefinementMinAccuracy": 0.1,
+    "cornerRefinementWinSize": 5,
+    "errorCorrectionRate": 0.4,
+    "markerBorderBits": 1,
+    "maxErroneousBitsInBorderRate": 0.35,
+    "maxMarkerPerimeterRate": 4,
+    "minCornerDistanceRate": 0.05,
+    "minDistanceToBorder": 5,
+    "minMarkerDistanceRate": 0.05,
+    "minMarkerPerimeterRate": 0.03,
+    "minOtsuStdDev": 5,
+    "perspectiveRemoveIgnoredMarginPerCell": 0.05,
+    "perspectiveRemovePixelPerCell": 12,
+    "polygonalApproxAccuracyRate": 0.1
+  }
+}

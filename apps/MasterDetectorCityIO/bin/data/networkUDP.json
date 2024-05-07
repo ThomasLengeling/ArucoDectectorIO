@@ -1,20 +1,27 @@
 [
   {
+    "geoGridMode": 1
+  },
+
+  {
     "network_0": {
       "ip": "127.0.0.1",
-      "port": 15800
+      "port": 15800,
+      "name": "jsongrid"
     }
   },
   {
     "network_1": {
-      "ip": "192.168.1.8",
-      "port": 15300
+      "ip": "127.0.0.1",
+      "port": 15300,
+      "name": "raw"
     }
   },
 {
     "network_2": {
       "ip": "127.0.0.1",
-      "port": 15801
+      "port": 15801,
+      "name": "tablet"
     }
   }
 ]

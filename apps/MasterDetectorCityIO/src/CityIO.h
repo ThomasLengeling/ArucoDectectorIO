@@ -3,12 +3,11 @@
 #pragma once
 
 /*
-Class for Maneging communications between the detector and CityIO
+Class the sends the detected blocks to a UDP port
 */
 
 #include "ofMain.h"
-#include "ofxHTTP.h"
-
+#include "ofxNetwork.h"
 
 class CityIO;
 typedef std::shared_ptr<CityIO> CityIORef;
@@ -26,16 +25,24 @@ public:
     void setTable(std::string t);
     void setBaseUrl(std::string url );
 
-    ofJson excuteGetRequest(std::string request);
-
     bool  updateGridPost(ofJson grid);
-
+    void  printValueDifferences(std::map<int, int>& map1, std::map<int, int>& map2);
   
-    void computeGeoGrid();
+    void computeTableProperties();
 
     void executePostGeoGrid(std::map<int, int> tags, bool overide = false);
 
-    void excuteGetRequestTUI(ofJson request);
+    std::string getNameFromArucoId(int id);
+
+    ofJson getGeoGridData() {
+        return geogriddata;
+    }
+    ofJson getUpdatedGeoGridData() {
+        return geogriddataNew;
+    }
+
+    bool isTagExist(int id);
+
 
 private:
 
@@ -63,5 +70,7 @@ private:
     //store JSON information
     ofJson geogrid;
     ofJson geogriddata;
+    //store JSON information
+    ofJson geogriddataNew;
 };
 

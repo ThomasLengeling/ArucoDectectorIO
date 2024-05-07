@@ -64,8 +64,10 @@ void ofApp::setupGridInfo() {
             for (int j = 0; j < mNumCams; j++) {
                 std::string inputGrid("grid_" + to_string(j));
                 ofLog(OF_LOG_NOTICE) << inputGrid << " " << j;
-                glm::vec2 gridSize = glm::vec2(gridjs[inputGrid]["x"], gridjs[inputGrid]["y"]);
+                glm::vec2 gridSize = glm::vec2(gridjs[inputGrid]["size_x"], gridjs[inputGrid]["size_y"]);
+                glm::vec2 gridPos = glm::vec2(gridjs[inputGrid]["start_x"], gridjs[inputGrid]["start_y"]);
                 mGridSizes.push_back(gridSize);
+                mGridStart.push_back(gridPos);
                 mMaxMarkers += (gridSize.x * gridSize.y);
                 ofLog(OF_LOG_NOTICE) << j << ": " << gridSize << " " << (gridSize.x * gridSize.y) << std::endl;
             }
@@ -85,64 +87,65 @@ void ofApp::setupUDPConnection() {
     std::string jsonNet = "networkUDP.json";
     ofLog(OF_LOG_NOTICE) << "Setup newtwork: " << jsonNet;
     ofFile file(jsonNet);
+    mGeoGridUDP = true;
     if (file.exists()) {
         ofJson js;
         file >> js;
         int i = 0;
         for (auto& net : js) {
+            std::string netName = "network_" + to_string(i - 1);
             if (i == 0) {
-                mUDPIp = net["network_" + to_string(i)]["ip"].get<std::string>();
-                mUDPPort = int(net["network_" + to_string(i)]["port"]);
-            }
-            else if (i == 1) {
-                mUDPRadarIp = net["network_" + to_string(i)]["ip"].get<std::string>();
-                mUDPRadarPort = int(net["network_" + to_string(i)]["port"]);
+                mGeoGridUDP = (net["geoGridMode"].get<int>() == 1) ? true : false;
+            }else if (i == 1) {
+                mUDPGeoGridIp = net[netName]["ip"].get<std::string>();
+                mUDPGeoGridPort = int(net[netName]["port"]);
             }
             else if (i == 2) {
-                mUDPTabletIp = net["network_" + to_string(i)]["ip"].get<std::string>();
-                mUDTabletPort = int(net["network_" + to_string(i)]["port"]);
+                mUDPRawIp = net[netName]["ip"].get<std::string>();
+                mUDPRawPort = int(net[netName]["port"]);
+            }
+            else if (i == 3) {
+                mUDPTableIp = net[netName]["ip"].get<std::string>();
+                mUDTablePort = int(net[netName]["port"]);
             }
             i++;
         }
-        ofLog(OF_LOG_NOTICE) << "Loaded: UDP Table:";
-        ofLog(OF_LOG_NOTICE) << "IP: " << mUDPIp << " Port: " << mUDPPort;
+        ofLog(OF_LOG_NOTICE) << "Loaded: UDP GeoGrid:";
+        ofLog(OF_LOG_NOTICE) << "IP: " << mUDPGeoGridIp << " Port: " << mUDPGeoGridPort;
 
-        ofLog(OF_LOG_NOTICE) << "Loaded: UDP Radar:";
-        ofLog(OF_LOG_NOTICE) << "IP: " << mUDPRadarIp << " Port: " << mUDPRadarPort;
+        ofLog(OF_LOG_NOTICE) << "Loaded: UDP Raw:";
+        ofLog(OF_LOG_NOTICE) << "IP: " << mUDPRawIp << " Port: " << mUDPRawPort;
 
-        ofLog(OF_LOG_NOTICE) << "Loaded: UDP Tablet:";
-        ofLog(OF_LOG_NOTICE) << "IP: " << mUDPTabletIp << " Port: " << mUDTabletPort;
+        ofLog(OF_LOG_NOTICE) << "Loaded: UDP Receiver:";
+        ofLog(OF_LOG_NOTICE) << "IP: " << mUDPTableIp << " Port: " << mUDTablePort;
     }
     else {
-        mUDPIp = "127.0.0.1";
-        mUDPPort = 15800;
+        mUDPGeoGridIp = "127.0.0.1";
+        mUDPGeoGridPort = 15800;
         ofLog(OF_LOG_NOTICE) << "fail loading newtwork: " << jsonNet
-            << " Default: " << mUDPIp << " " << mUDPPort;
+            << " Default: " << mUDPGeoGridIp << " " << mUDPGeoGridPort;
     }
 
-    //radar
-    ofxUDPSettings settingsRadar;
-    settingsRadar.sendTo(mUDPRadarIp, mUDPRadarPort);
-    settingsRadar.blocking = false;
-    mUDPConnectionRadar.Setup(settingsRadar);
-
     // table
-    ofxUDPSettings settingsTable;
-    settingsTable.sendTo(mUDPIp, mUDPPort);
-    settingsTable.blocking = false;
-    mUDPConnectionTable.Setup(settingsTable);
+    ofxUDPSettings settings;
+    settings.sendTo(mUDPGeoGridIp, mUDPGeoGridPort);
+    settings.blocking = false;
+    mUDPConnectionGeoGrid.Setup(settings);
 
+    //radar
+    settings.sendTo(mUDPRawIp, mUDPRawPort);
+    settings.blocking = false;
+    mUDPConnectionRaw.Setup(settings);
 
     //tablets
-    ofxUDPSettings settingsTablet;
-    settingsTablet.receiveOn(mUDTabletPort);
-    settingsTablet.blocking = false;
-    mUDPConnectionTablet.Setup(settingsTablet);
+    settings.receiveOn(mUDTablePort);
+    settings.blocking = false;
+    mUDPConnectionTable.Setup(settings);
 
 
     //send a simple msg.
-    std::string message = "connected to Aruco Detector";
-    mUDPConnectionTable.Send(message.c_str(), message.length());
+    //std::string message = "Connected to Aruco Detector";
+    //mUDPConnectionTable.Send(message.c_str(), message.length());
 
     ofLog(OF_LOG_NOTICE) << "done setup UDP connection ";
 }
@@ -152,20 +155,6 @@ void ofApp::setupGUI() {
     int sliderStartX =  250;
     int sliderStartY = ofGetWindowHeight() - 200;
    
-    mAccurancy = ofxDatButton::create();
-    mAccurancy->button = new ofxDatGuiToggle("Accurancy", true);
-    mAccurancy->setActivation(true);
-    mAccurancy->button->setPosition(sliderStartX, sliderStartY-30);
-    mAccurancy->button->setWidth(100, .5);
-    mAccurancy->button->onButtonEvent([&](ofxDatGuiButtonEvent v) {
-        mAccurancy->toggle();
-        if (mAccurancy->isActive()) {
-            std::cout << "accurancy";
-        }
-        if(!mAccurancy->isActive()) {
-            std::cout << "non accurancy";
-        }
-        });
 
     mBSingleGrid = ofxDatButton::create();
     mBSingleGrid->button = new ofxDatGuiToggle("Single Input", false);
@@ -379,6 +368,7 @@ void ofApp::setupGridDetector() {
     for (int i = 0; i < mNumCams; i++) {
         ofLog(OF_LOG_NOTICE) << "setup grid: " << i << " " << mGridSizes.at(i);
         GridDetectorRef griD = GridDetector::create(mGridSizes.at(i));
+        griD->setGridStart(mGridStart.at(i));
         griD->setId(i);
         std::string gridPosFile = "gridpos_0" + to_string(i) + ".json";
         griD->setupGridJsonPos(gridPosFile);

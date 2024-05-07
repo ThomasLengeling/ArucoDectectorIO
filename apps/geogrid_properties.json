@@ -1,0 +1,146 @@
+{
+    "geogrid_to_tui_mapping": {},
+    "header": {
+        "cellSize": 80,
+        "latitude": 42.372935,
+        "longitude": -71.087387,
+        "ncols": 16,
+        "nrows": 16,
+        "projection": "+proj=lcc +lat_1=42.68333333333333 +lat_2=41.71666666666667 +lat_0=41 +lon_0=-71.5 +x_0=200000 +y_0=750000 +ellps=GRS80 +datum=NAD83 +units=m +no_def",
+        "rotation": -30,
+        "tableName": "volpe_css",
+        "tz": -4.0
+    },
+    "types": {
+        "Education": {
+            "LBCS": null,
+            "NAICS": null,
+            "color": [
+                43,
+                140,
+                190,
+                255
+            ],
+            "height": [
+                10
+            ]
+        },
+        "Healthcare": {
+            "LBCS": null,
+            "NAICS": null,
+            "color": [
+                8,
+                104,
+                172,
+                255
+            ],
+            "height": [
+                10
+            ]
+        },
+        "Industrial": {
+            "LBCS": null,
+            "NAICS": null,
+            "color": [
+                84,
+                39,
+                143,
+                255
+            ],
+            "height": [
+                10
+            ]
+        },
+        "None": {
+            "LBCS": null,
+            "NAICS": null,
+            "color": [
+                50,
+                50,
+                50,
+                50
+            ],
+            "height": [
+                10
+            ]
+        },
+        "Office": {
+            "LBCS": null,
+            "NAICS": null,
+            "color": [
+                240,
+                59,
+                32,
+                180
+            ],
+            "height": [
+                10
+            ]
+        },
+        "Open Space": {
+            "LBCS": null,
+            "NAICS": null,
+            "color": [
+                0,
+                109,
+                44,
+                255
+            ],
+            "height": [
+                10
+            ]
+        },
+        "Religious": {
+            "LBCS": null,
+            "NAICS": null,
+            "color": [
+                123,
+                204,
+                196,
+                255
+            ],
+            "height": [
+                10
+            ]
+        },
+        "Residential": {
+            "LBCS": null,
+            "NAICS": null,
+            "color": [
+                254,
+                227,
+                145,
+                255
+            ],
+            "height": [
+                10
+            ]
+        },
+        "Retail": {
+            "LBCS": null,
+            "NAICS": null,
+            "color": [
+                253,
+                174,
+                107,
+                255
+            ],
+            "height": [
+                10
+            ]
+        },
+        "Utility": {
+            "LBCS": null,
+            "NAICS": null,
+            "color": [
+                115,
+                115,
+                115,
+                255
+            ],
+            "height": [
+                10
+            ]
+        }
+    }
+}

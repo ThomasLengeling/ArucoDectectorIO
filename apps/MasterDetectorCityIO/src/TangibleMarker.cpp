@@ -8,6 +8,7 @@ ProbabiltyAruco::ProbabiltyAruco() {
 //--------------------------------------------------------------
 void ProbabiltyAruco::incProba() { mInc++; }
 float ProbabiltyAruco::getProba(int maxNum) {
+
   return ((float)mInc / (float)maxNum);
 }
 //--------------------------------------------------------------

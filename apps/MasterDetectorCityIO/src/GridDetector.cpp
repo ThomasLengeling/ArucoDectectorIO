@@ -51,11 +51,14 @@ void GridDetector::setupBlocks() {
 //-----------------------------------------------------------------------------
 void GridDetector::generateGridPos(int startGridX, int startGridY, int stepX, int stepY) {
     mMarkers.clear();
-    int indeY = -1;
+    int indeY = 0;
     int indeX = 0;
-    ofLog(OF_LOG_NOTICE) << "Max Markers: " << mMaxMarkers; //gridPos[mId].size()
+    ofLog(OF_LOG_NOTICE) << "Max Markers: " << mMaxMarkers << " " << mGridDim.x << " " << mGridDim.y << " " << mGridStart.x << " " << mGridStart.y;
     for (int i = 0; i < mMaxMarkers; i++) {
         TangibleMarkerRef m = TangibleMarker::create();
+
+        indeX = i % int(mGridDim.x);
+        indeY = i / int(mGridDim.x);
 
         float x = indeX * stepX + startGridX;
         float y = indeY * stepY + startGridY;
@@ -64,44 +67,13 @@ void GridDetector::generateGridPos(int startGridX, int startGridY, int stepX, in
         m->setGridId(i);  //
        // m->setInteractiveId(i);
 
-        indeX = i % 16;
-        if (i % 16 == 0) {
-            indeY++;
-        }
+ 
+        int gridId = (indeX + (indeY + mGridStart.y) * mGridDim.x + mGridStart.x);
+        m->setInteractiveId(gridId);
 
-        if (mId == 0) {
-            int gridId = (indeX + indeY * 16 + 0);
-            m->setInteractiveId(gridId);
-        }
-        else if (mId == 1) {
-            int gridId = (indeX + (indeY + 8) * 16);
-            m->setInteractiveId(gridId);
-        }
 
-        /*
-        *         
-        
-        indeX = i % 8;
-        if (i % 8 == 0) {
-            indeY++;
-        }
-        if (mId == 0) {
-            int gridId = (indeX + indeY * 16 + 0);
-            m->setInteractiveId(gridId);
-        }
-        else if(mId == 1) {
-            int gridId = (indeX + indeY * 16 + 8);
-            m->setInteractiveId(gridId);
-        }
-        else if (mId == 2) {
-            int gridId = (indeX + (indeY + 8) * 16);
-            m->setInteractiveId(gridId);
-        }
-        else if (mId == 3) {
-            int gridId = (indeX + (indeY + 8) * 16 + 8);
-            m->setInteractiveId(gridId);
-        }
-        */
+        ofLog(OF_LOG_NOTICE) << i << " " << indeX << " " << indeY<<" : "<<gridId;
+
         m->setMarkerId(-1);
         mMarkers.push_back(m);
 
@@ -128,7 +100,7 @@ void GridDetector::setupCleaner() {
 
   // cleaner
   mWindowCounter = 0;
-  mWindowIterMax = 12; ///12
+  mWindowIterMax = 15; ///12
   mCleanDone = false;
 
   for (int i = 0; i < mMaxMarkers; i++) {
@@ -599,7 +571,7 @@ void GridDetector::calculateProbabilityGrid() {
             //ofLog(OF_LOG_NOTICE) << proba <<" "<< mk->getInc();
 
 
-            if (proba >= 0.1) {
+            if (proba >= 0.7) {
                 mk->enableOn();
                 mk->setMarkerId(mIdsCounter[i]);
                 mk->updateIdPair(mIdsCounter[i]);

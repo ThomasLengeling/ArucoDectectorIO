@@ -20,7 +20,7 @@ void ArucoDetector::resetMinMax() {
 }
 
 void ArucoDetector::generateDetectorParams() {
-    generateDetectorParams("camera_config.json");
+    generateDetectorParams("aruco_config.json");
 }
 
 void ArucoDetector::generateDetectorParams(std::string sfile) {
@@ -29,32 +29,33 @@ void ArucoDetector::generateDetectorParams(std::string sfile) {
     if (file.exists()) {
         ofJson  jsParams;
         file >> jsParams;
+        ofJson arucoConfig = jsParams["aruco"];
 
-        double adaptiveThreshConstant       = jsParams["camera"]["adaptiveThreshConstant"].get<double>();
-        int adaptiveThreshWinSizeMax        = jsParams["camera"]["adaptiveThreshWinSizeMax"].get<int>();
-        int adaptiveThreshWinSizeMin        = jsParams["camera"]["adaptiveThreshWinSizeMin"].get<int>();
-        int adaptiveThreshWinSizeStep       = jsParams["camera"]["adaptiveThreshWinSizeStep"].get<int>();
+        double adaptiveThreshConstant       = arucoConfig["adaptiveThreshConstant"].get<double>();
+        int adaptiveThreshWinSizeMax        = arucoConfig["adaptiveThreshWinSizeMax"].get<int>();
+        int adaptiveThreshWinSizeMin        = arucoConfig["adaptiveThreshWinSizeMin"].get<int>();
+        int adaptiveThreshWinSizeStep       = arucoConfig["adaptiveThreshWinSizeStep"].get<int>();
 
-        int cornerRefinementMaxIterations   = jsParams["camera"]["cornerRefinementMaxIterations"].get<int>();
-        double cornerRefinementMinAccuracy  = jsParams["camera"]["cornerRefinementMinAccuracy"].get<double>();
-        int cornerRefinementWinSize         = jsParams["camera"]["cornerRefinementWinSize"].get<int>();
+        int cornerRefinementMaxIterations   = arucoConfig["cornerRefinementMaxIterations"].get<int>();
+        double cornerRefinementMinAccuracy  = arucoConfig["cornerRefinementMinAccuracy"].get<double>();
+        int cornerRefinementWinSize         = arucoConfig["cornerRefinementWinSize"].get<int>();
 
-        double errorCorrectionRate          = jsParams["camera"]["errorCorrectionRate"].get<double>();
-        int markerBorderBits                = jsParams["camera"]["markerBorderBits"].get<int>();
-        double maxErroneousBitsInBorderRate = jsParams["camera"]["maxErroneousBitsInBorderRate"].get<double>();
+        double errorCorrectionRate          = arucoConfig["errorCorrectionRate"].get<double>();
+        int markerBorderBits                = arucoConfig["markerBorderBits"].get<int>();
+        double maxErroneousBitsInBorderRate = arucoConfig["maxErroneousBitsInBorderRate"].get<double>();
 
-        double maxMarkerPerimeterRate  = jsParams["camera"]["maxMarkerPerimeterRate"].get<double>();
-        double minCornerDistanceRate   = jsParams["camera"]["minCornerDistanceRate"].get<double>();
-        int minDistanceToBorder        = jsParams["camera"]["minDistanceToBorder"].get<int>();
+        double maxMarkerPerimeterRate  = arucoConfig["maxMarkerPerimeterRate"].get<double>();
+        double minCornerDistanceRate   = arucoConfig["minCornerDistanceRate"].get<double>();
+        int minDistanceToBorder        = arucoConfig["minDistanceToBorder"].get<int>();
 
-        double minMarkerDistanceRate   = jsParams["camera"]["minMarkerDistanceRate"].get<double>();
-        double minMarkerPerimeterRate  = jsParams["camera"]["minMarkerPerimeterRate"].get<double>();
+        double minMarkerDistanceRate   = arucoConfig["minMarkerDistanceRate"].get<double>();
+        double minMarkerPerimeterRate  = arucoConfig["minMarkerPerimeterRate"].get<double>();
 
-        double minOtsuStdDev              = jsParams["camera"]["minOtsuStdDev"].get<double>();
+        double minOtsuStdDev              = arucoConfig["minOtsuStdDev"].get<double>();
 
-        double perspectiveRemoveIgnoredMarginPerCell = jsParams["camera"]["perspectiveRemoveIgnoredMarginPerCell"].get<double>();
-        int perspectiveRemovePixelPerCell            = jsParams["camera"]["perspectiveRemovePixelPerCell"].get<int>();
-        double polygonalApproxAccuracyRate           = jsParams["camera"]["polygonalApproxAccuracyRate"].get<double>();
+        double perspectiveRemoveIgnoredMarginPerCell = arucoConfig["perspectiveRemoveIgnoredMarginPerCell"].get<double>();
+        int perspectiveRemovePixelPerCell            = arucoConfig["perspectiveRemovePixelPerCell"].get<int>();
+        double polygonalApproxAccuracyRate           = arucoConfig["polygonalApproxAccuracyRate"].get<double>();
 
 
 
@@ -116,25 +117,7 @@ void ArucoDetector::setupCalibration(int markersX, int markersY) {
 
   detectorParams = cv::aruco::DetectorParameters::create();
 
-  detectorParams->adaptiveThreshWinSizeMin = 3; //20
-  detectorParams->adaptiveThreshWinSizeMax = 44; //50
-  detectorParams->adaptiveThreshWinSizeStep = 4;
-
-  detectorParams->perspectiveRemovePixelPerCell = 12; // 10
-  detectorParams->perspectiveRemoveIgnoredMarginPerCell = .12; //.15  0.04
-  detectorParams->errorCorrectionRate = 0.4;
-  detectorParams->maxErroneousBitsInBorderRate = 0.65;//35
-  detectorParams->minOtsuStdDev = 5;//
-  //detectorParams->maxErroneousBitsInBorderRate = 0.1;
-  //detectorParams->maxMarkerPerimeterRate = 5;
-
-  detectorParams->maxErroneousBitsInBorderRate = 15;
-
-  detectorParams->polygonalApproxAccuracyRate = 0.01;//.1
-
-  //detectorParams->markerBorderBits = 0;
-
-  detectorParams->minDistanceToBorder = 5;
+  generateDetectorParams();
 
   bool refindStrategy = false;
 

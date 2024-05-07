@@ -1,0 +1,134 @@
+{
+    "Codes": {
+        "Education": {
+            "name": "Education",
+            "color": [
+                43,
+                140,
+                190,
+                255
+            ],
+            "aruco_id": 35,
+            "height": [
+                10
+            ]
+        },
+        "Healthcare": {
+            "name": "Healthcare",
+            "color": [
+                8,
+                104,
+                172,
+                255
+            ],
+            "aruco_id": 38,
+            "height": [
+                10
+            ]
+        },
+        "Industrial": {
+            "name": "Industrial",
+            "color": [
+                84,
+                39,
+                143,
+                255
+            ],
+            "aruco_id": 34,
+            "height": [
+                10
+            ]
+        },
+        "None": {
+            "name": "None",
+            "color": [
+                50,
+                50,
+                50,
+                50
+            ],
+            "aruco_id": 17,
+            "height": [
+                10
+            ]
+        },
+        "Office": {
+            "name": "Office",
+            "color": [
+                240,
+                59,
+                32,
+                180
+            ],
+            "aruco_id": 7,
+            "height": [
+                10
+            ]
+        },
+        "Open Space": {
+            "name": "Open Space",
+            "color": [
+                0,
+                109,
+                44,
+                255
+            ],
+            "aruco_id": 43,
+            "height": [
+                10
+            ]
+        },
+        "Religious": {
+            "name": "Religious",
+            "color": [
+                123,
+                204,
+                196,
+                255
+            ],
+            "aruco_id": 6,
+            "height": [
+                10
+            ]
+        },
+        "Residential": {
+            "name": "Residential",
+            "color": [
+                254,
+                227,
+                145,
+                255
+            ],
+            "aruco_id": 4,
+            "height": [
+                10
+            ]
+        },
+        "Retail": {
+            "name": "Retail",
+            "color": [
+                253,
+                174,
+                107,
+                255
+            ],
+            "aruco_id": 8,
+            "height": [
+                10
+            ]
+        },
+        "Utility": {
+            "name": "Utility",
+            "color": [
+                115,
+                115,
+                115,
+                255
+            ],
+            "aruco_id": 10,
+            "height": [
+                10
+            ]
+        }
+    }
+}
